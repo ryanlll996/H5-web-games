@@ -1,0 +1,33 @@
+
+:root {
+    --body-width: 100%;
+    --font-size-root: 16px; /* 默认字体大小 */
+}
+*{
+    box-sizing: border-box; 
+}
+html {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--font-size-root) !important;
+    font-family: Microsoft YaHei UI;
+}
+body {
+    overflow: hidden;
+    max-width: 720px;
+    position: relative;
+    margin: 0 auto;
+    box-sizing: border-box;
+    aspect-ratio: 3 / 5;
+    width: var(--body-width);
+    transition: width 0.3s ease;
+}
+
+
+iframe {
+    left: 0 !important;
+}
+.u-transition{
+    position: absolute !important;
+}
