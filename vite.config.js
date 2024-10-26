@@ -7,7 +7,7 @@ export default defineConfig({
   ],
   transpileDependencies: ['uview-ui'],
   base: './',
-  publicPath: '/',
+  publicPath: './',
   server: {
     proxy: {
       '/api': {
