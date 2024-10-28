@@ -85,9 +85,10 @@ export default {
       return decodeURIComponent(results[2].replace(/\+/g, ' '));
     },
     async getChannelByUrl() {
-      const { origin, pathname } = location;
-      const baseUrl = origin + pathname;
-      const currentPath = baseUrl === 'http://localhost:5174/' ? 'http://top3.game' : baseUrl.slice(0, -1);
+      // const { origin, pathname } = location;
+      // const baseUrl = origin + pathname.replace(/\/\d+\/?$/, '');
+      // const currentPath = baseUrl === 'http://localhost:5174/' ? 'http://top3.game' : baseUrl.slice(0, -1);
+      const currentPath = 'http://top3.game';
       const res = await this.$api.home.getWebsite({ url: currentPath })
       this.$store.dispatch('setChannelInfo', res);
     },
