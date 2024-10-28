@@ -280,10 +280,7 @@ export default {
   height: 100%;
   position: absolute;
   width: 100%;
-  background-color: var(--home--bg);
-  background-image: url('https://front-n2.jingcdd.xyz/gjlm5810/1c3e8943-ea14-4cd3-a74e-5680eb507e93.png');
-  background-repeat: repeat;
-
+  background-color: #433C39;
   // background-size: 100% 100%;
   .rank-import {
     position: absolute;
