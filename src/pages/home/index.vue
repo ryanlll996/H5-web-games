@@ -84,15 +84,17 @@ export default {
                 font-weight: 700;
                 text-align: left;
                 color: #DD8400;
+                padding: 0.5rem 0;
             }
         }
         .game-types-item-bottom{
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            justify-content: flex-start;
+            gap: 0.84rem;
             .game-item{
-                width: 4.69rem;
-                height: 4.69rem;
+                width: calc(25% - 0.84rem);
+                aspect-ratio: 1/1;
                 border-radius: 0.25rem;
                 image{
                     width: 100%;

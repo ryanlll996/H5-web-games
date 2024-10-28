@@ -21,11 +21,16 @@
                     </template>
                 </up-input>
             </view>
-            <view class="menus-item" @click="onHotGamesClick">
+            <view class="menus-item">
                 <svg width="0.28rem" height="0.84rem" viewBox="0 0 9 27" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <rect width="9" height="27" fill="#FF9E0D" />
                 </svg>
                 Hot Games
+            </view>
+            <view class="game-types">
+                <view class="game-types-item" @click="onHotGamesClick">
+                    Hot Games
+                </view>
             </view>
             <view class="menus-item">
                 <svg width="0.28rem" height="0.84rem" viewBox="0 0 9 27" fill="none" xmlns="http://www.w3.org/2000/svg">

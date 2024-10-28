@@ -82,6 +82,7 @@ export default {
         console.log(options)
         this.categoryName = options.name
         this.gameParam.tid = options.id
+        this.getTags()
         if(options.search == 0){
             this.isSearch = true
             this.gameParam.keyword = options.searchValue
@@ -101,7 +102,6 @@ export default {
 
     },
     mounted() {
-        this.getTags()
     },
     methods: {
         async getTags() {
