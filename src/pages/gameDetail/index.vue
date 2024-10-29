@@ -27,7 +27,7 @@
                         </view>
                     </view>
                     <view class="play-btn">
-                        <view class="btn">
+                        <view class="btn" @click="play(gameDetail)">
                             Play Game
                         </view>
                     </view>
@@ -112,6 +112,10 @@ export default {
         async getGameList() {
             const res = await this.$api.home.getGameList(this.gameParam);
             this.relatedList = res.data
+        },
+        play(game) {
+            console.log(game)
+            window.location.href = game.url
         }
     }
 }
