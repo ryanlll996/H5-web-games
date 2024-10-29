@@ -247,7 +247,7 @@ export default {
   height: 100%;
   position: absolute;
   width: 100%;
-  background-color: #433C39;
+  background-color: #FFF5F7;
 
   // background-size: 100% 100%;
   .rank-import {
