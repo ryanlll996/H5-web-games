@@ -10,6 +10,11 @@ function getWebsite (params) {
     return request('/api/index/website', 'POST', params).then(res => res)
 }
 
+// 首页游戏推荐列表
+function getHome (params) {
+    return request('/api/index/home', 'POST', params).then(res => res)
+}
+
 // 游戏列表
 function getGameList (params) {
     return request('/api/index/index', 'POST', params).then(res => res)
@@ -48,6 +53,7 @@ export default {
     getTags,
     getNewGame,
     gameDetail,
-    getCatGame
+    getCatGame,
+    getHome
 }
 

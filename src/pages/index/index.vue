@@ -1,16 +1,15 @@
 <template>
   <view class="index-wapper" :class="[currentTheme + '-theme']">
-    <c-navbar @toHome="toHome"
-      @openLeftMenu="openLeftMenu"></c-navbar>
+    <c-navbar @toHome="toHome" @openLeftMenu="openLeftMenu"></c-navbar>
     <scroll-view class="scroll-view" scroll-y scroll-with-animation="true" @scrolltolower="loadChargeListMore"
       @scroll="onScroll" :scroll-into-view="scrollIntoViewId">
-      <Home v-if="currentTab === 0" :gameTypes="gameTypes" ref="home"></Home>
+      <Home v-if="currentTab === 0" :newGames="newGameList" :hotGames="hotGameList" ref="home"></Home>
     </scroll-view>
 
-    <leftMenu :isLeftMenu="isLeftMenu" :gameTypes="gameTypes" @close="isLeftMenu = false"
+    <leftMenu :isLeftMenu="isLeftMenu" :gameTypes="cates" @close="isLeftMenu = false"
       @onHotGamesClick="onHotGamesClick" @onGamesClick="onGamesClick">
     </leftMenu>
-    <Footer/>
+    <Footer />
   </view>
 </template>
 
@@ -26,12 +25,14 @@ export default {
       isLeftMenu: false,
       scrollIntoViewId: '',
       gameTypes: [],
+      newGameList: [],
+      hotGameList: [],
       gameParam: {
         page: 1,
         limit: 9,
         keyword: '',
         orderBy: '',
-        tid: ''
+        wid: ''
       },
     }
   },
@@ -41,26 +42,29 @@ export default {
     Footer
   },
   computed: {
-    ...mapGetters(['isLogin', 'currentTab', 'currentTheme', 'channelInfo'])
+    ...mapGetters(['isLogin', 'currentTab', 'currentTheme', 'channelInfo', 'cates'])
   },
   onLoad() {
-    this.$store.dispatch('setTab', 0);
     this.getChannelByUrl()
+    this.getNewGames()
+    this.getHotGames()
     this.getTas()
-    this.getCategoryGame()
+    // this.getCategoryGame()
   },
   onShow() {
-    
+
   },
   methods: {
     async getCategoryGame() {
-      const res = await this.$api.home.getCatGame({num: 4})
+      const res = await this.$api.home.getCatGame({ num: 4 })
       console.log(res)
       this.gameTypes = res
     },
-    async getTas(){
+    async getTas() {
       const res = await this.$api.home.getHotTag()
       console.log(res)
+      this.gameTypes = res
+      this.$store.dispatch('setCates', res);
       // res.forEach((element, index) => {
       //   this.gameParam.limit = 4
       //   this.gameParam.tid = element.id
@@ -68,12 +72,26 @@ export default {
       //   this.gameParam.tid = ''
       // });
     },
+
     async loadGame(tags, index) {
       const res = await this.$api.home.getGameList(this.gameParam);
       tags[index].list = res.data
       this.gameTypes = tags
-      console.log('loadGame', this.gameTypes)  
-
+      console.log('loadGame', this.gameTypes)
+    },
+    async getNewGames() {
+      this.gameParam.orderBy = 'id desc'
+      this.gameParam.limit = 4
+      this.gameParam.wid = this.channelInfo.wid
+      const res = await this.$api.home.getNewGame(this.gameParam);
+      this.newGameList = res.data
+    },
+    async getHotGames() {
+      this.gameParam.orderBy = 'hot_num desc'
+      this.gameParam.limit = 4
+      this.gameParam.wid = this.channelInfo.wid
+      const res = await this.$api.home.getNewGame(this.gameParam);
+      this.hotGameList = res.data
     },
     getParameterByName(name, url) {
       if (!url) url = window.location.href;
@@ -87,29 +105,19 @@ export default {
     async getChannelByUrl() {
       const { origin, pathname } = location;
       const baseUrl = origin + pathname;
-      const currentPath = baseUrl === 'http://localhost:5174/' ? 'http://top3.game' : baseUrl.slice(0, -1);
+      const currentPath = 'http://top3.game';
       const res = await this.$api.home.getWebsite({ url: currentPath })
       this.$store.dispatch('setChannelInfo', res);
     },
-  
-    
+
+
     async loadBanner() {
       console.log('loadBanner')
       this.bannerList = await this.$api.home.getAd();
     },
-   
+
     async closeLogin() {
       this.isShowLogin = false
-    },
-    onGameTypeClick(item) {
-      this.gameParam.page = 1
-      this.currentGameType = item.id
-      this.currentGameName = item.name
-      this.currentGameImg = item.img
-      this.gameParam.pid = item.id
-      this.list = []
-      this.status = 'loading'
-      this.loadGame()
     },
     toRecharge() {
       this.$store.dispatch('setTab', 2);
@@ -129,7 +137,7 @@ export default {
       this.$store.dispatch('setTab', 1);
     },
     onGamesClick(item) {
-      
+
     },
     openLeftMenu() {
       this.isLeftMenu = true
@@ -175,33 +183,8 @@ export default {
         }
       }
     },
-    loadPGMore() {
-      const { currentTab } = this
-      if (currentTab === 0) {
-        this.gamePGParam.page++
-        if (this.listObj.pgStatus !== 'nomore') {
-          this.loadPGGame()
-        }
-      }
-    },
-    loadJILIMore() {
-      const { currentTab } = this
-      if (currentTab === 0) {
-        this.gameJILIParam.page++
-        if (this.listObj.jiliStatus !== 'nomore') {
-          this.loadJiliGame()
-        }
-      }
-    },
-    loadPPMore() {
-      const { currentTab } = this
-      if (currentTab === 0) {
-        this.gamePPParam.page++
-        if (this.listObj.ppStatus !== 'nomore') {
-          this.loadPPGame()
-        }
-      }
-    },
+   
+   
     loadChargeListMore() {
       if (this.currentTab === 1) {
         this.chargeObj.page++
@@ -211,16 +194,7 @@ export default {
         }
       }
     },
-    receive() {
-      this.dataList = []
-      this.loadingChargeList()
-    },
-    tabSwitch(index) {
-      this.dataList = []
-      this.chargeObj.page = 1
-      this.chargeObj.type = index
-      this.loadingChargeList()
-    },
+   
     onFilterConfirm(e) {
       this.chargeObj.page = 1
       this.dataList = []
@@ -230,14 +204,7 @@ export default {
     onScroll(e) {
       console.log(e.detail.scrollHeight)
     },
-    toRank() {
-      if (!this.isLogin) {
-        return
-      }
-      uni.navigateTo({
-        url: '/pages/rank/index'
-      })
-    },
+  
     refresh() {
     },
     toUrl(item) {
@@ -281,6 +248,7 @@ export default {
   position: absolute;
   width: 100%;
   background-color: #433C39;
+
   // background-size: 100% 100%;
   .rank-import {
     position: absolute;

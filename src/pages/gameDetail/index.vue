@@ -50,7 +50,7 @@
             </view>
         </scroll-view>
         <Footer />
-        <leftMenu :isLeftMenu="isLeftMenu" :gameTypes="categoryList" @close="isLeftMenu = false"
+        <leftMenu :isLeftMenu="isLeftMenu" :gameTypes="cates" @close="isLeftMenu = false"
             @onHotGamesClick="onHotGamesClick" @onGamesClick="onGamesClick">
         </leftMenu>
     </view>
@@ -79,7 +79,7 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(["currentTheme"])
+        ...mapGetters(["currentTheme", "cates"]),
     },
     components: {
         leftMenu,
@@ -88,17 +88,12 @@ export default {
     onLoad(options) {
         this.id = options.id
         this.getGameDetail()
-        this.getTags()
     },
     methods: {
         openLeftMenu() {
             this.isLeftMenu = true
         },
-        async getTags() {
-            const res = await this.$api.home.getTags()
-            console.log(res)
-            this.categoryList = res
-        },
+        
         async getGameDetail() {
             const res = await this.$api.home.gameDetail({ id: this.id });
             this.gameDetail = res
@@ -108,6 +103,12 @@ export default {
         async getGameList() {
             const res = await this.$api.home.getGameList(this.gameParam);
             this.relatedList = res.data
+        },
+        toGame(game) {
+            console.log(game)
+            uni.redirectTo({
+                url: `/pages/gameDetail/index?id=${game.id}`
+            })
         }
     }
 }
