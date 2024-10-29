@@ -16,7 +16,7 @@
             </view>
             <view class="game-types-item-bottom">
                 <view class="game-item" v-for="(game) in newGames" :key="game.id" @click="toGame(game)">
-                    <image :src="game.img"></image>
+                    <image :src="game.img" mode="widthFix"></image>
                     <view class="game-name">{{ game.name }}</view>
                 </view>
             </view>
