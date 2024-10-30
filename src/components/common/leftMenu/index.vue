@@ -1,13 +1,13 @@
 <template>
     <up-popup :show="menuOpen" mode="top" :safeAreaInsetTop="true" :closeOnClickOverlay="true">
         <view class="menus">
-            <view class="menus-title">
+            <!-- <view class="menus-title">
                 <view class="title">Games</view>
                 <view class="line"></view>
-            </view>
+            </view> -->
             <view class="game-types">
-                <view class="game-types-item" v-if="gameTypes.length > 0" v-for="(item, index) in cates"
-                    :key="index" @click="onGamesClick(item)">
+                <view class="game-types-item" v-if="gameTypes.length > 0" v-for="(item, index) in cates" :key="index"
+                    @click="onGamesClick(item)">
                     {{ item.name }}
                 </view>
             </view>
@@ -55,9 +55,6 @@ export default {
             uni.redirectTo({
                 url: `/pages/group/index?id=${item.id}&&name=${item.name}&&isHot=1`
             })
-        },
-        onTextChange(value) {
-            this.searchValue = value
         }
     }
 }
@@ -83,7 +80,7 @@ export default {
     box-sizing: border-box;
     width: 100%;
     height: 100%;
-    background-color: #342925;
+    background-color: #FF6D85;
 
     // .search {
     //     .search-input {
@@ -106,6 +103,7 @@ export default {
             color: #E1FF00;
             margin-right: 0.5rem;
         }
+
         .line {
             background-color: #E1FF00;
             height: 2px;
@@ -125,20 +123,20 @@ export default {
     .game-types {
         margin-top: 0.8125rem;
         display: flex;
-        flex-wrap: wrap;
-        gap: 0.91rem;
+        flex-direction: column;
         .game-types-item {
-            width: calc(50% - 0.91rem);
+            width: 100%;
             font-family: Inter;
-            font-size: 0.9375rem;
-            font-weight: 400;
-            text-align: center;
-            color: #342925;
-            padding: 0.53rem 0;
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: #fff;
+            padding: 0.72rem 0.625rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            background-color: #AFB586;
+            background-color: #D71E3C;
+            border-radius: 0.25rem;
+            margin-bottom: 0.1875rem;
         }
     }
 }

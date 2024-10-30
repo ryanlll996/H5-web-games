@@ -16,7 +16,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: #342925;
+    background-color: #D71E3C;
     .footer-line {
         font-family: Inter;
         font-size: 0.625rem;

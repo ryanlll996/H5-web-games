@@ -1,9 +1,9 @@
 <template>
   <view class="index-wapper" :class="[currentTheme + '-theme']">
-    <c-navbar @toHome="toHome" @openLeftMenu="openLeftMenu"></c-navbar>
+    <c-navbar @openLeftMenu="openLeftMenu"></c-navbar>
     <scroll-view class="scroll-view" scroll-y scroll-with-animation="true" @scrolltolower="loadChargeListMore"
       @scroll="onScroll" :scroll-into-view="scrollIntoViewId">
-      <Home v-if="currentTab === 0" :newGames="newGameList" :hotGames="hotGameList" ref="home"></Home>
+      <Home v-if="currentTab === 0" :newGames="newGameList" :hotGames="hotGameList" :gameCateList="gameCateList" ref="home"></Home>
     </scroll-view>
 
     <leftMenu :isLeftMenu="isLeftMenu" :gameTypes="cates" @close="isLeftMenu = false"
@@ -25,6 +25,7 @@ export default {
       isLeftMenu: false,
       scrollIntoViewId: '',
       gameTypes: [],
+      gameCateList: [],
       newGameList: [],
       hotGameList: [],
       gameParam: {
@@ -49,16 +50,16 @@ export default {
     this.getNewGames()
     this.getHotGames()
     this.getTas()
-    // this.getCategoryGame()
+    this.getCategoryGame()
   },
   onShow() {
 
   },
   methods: {
     async getCategoryGame() {
-      const res = await this.$api.home.getCatGame({ num: 4 })
+      const res = await this.$api.home.getCatGame({ num: 6 })
       console.log(res)
-      this.gameTypes = res
+      this.gameCateList = res
     },
     async getTas() {
       const res = await this.$api.home.getHotTag()
@@ -81,14 +82,14 @@ export default {
     },
     async getNewGames() {
       this.gameParam.orderBy = 'id desc'
-      this.gameParam.limit = 4
+      this.gameParam.limit = 6
       this.gameParam.wid = this.channelInfo.wid
       const res = await this.$api.home.getNewGame(this.gameParam);
       this.newGameList = res.data
     },
     async getHotGames() {
       this.gameParam.orderBy = 'hot_num desc'
-      this.gameParam.limit = 4
+      this.gameParam.limit = 6
       this.gameParam.wid = this.channelInfo.wid
       const res = await this.$api.home.getNewGame(this.gameParam);
       this.hotGameList = res.data
