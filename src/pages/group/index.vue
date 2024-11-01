@@ -2,7 +2,7 @@
     <view class="group-container" :class="[currentTheme + '-theme']">
         <c-navbar @openLeftMenu="openLeftMenu"></c-navbar>
         <scroll-view class="group-list" scroll-y>
-            <view class="ad">
+            <view class="ad" v-if="!isSearch">
 
             </view>
             <view class="games">
@@ -18,33 +18,44 @@
                     </svg>
                     {{ categoryName }}
                 </view>
-                <view class="game-list">
+                <view class="game-list" v-if="!isSearch">
                     <view class="game-item" v-for="(item, index) in gameList" :key="index" @click="toGame(item)">
                         <image :src="item.img" mode="widthFix"></image>
                         <view class="game-name">{{ item.name }}</view>
                     </view>
                 </view>
-            </view>
-            <view class="related">
-                <view class="title">
-                    <svg width="1.25rem" height="1.25rem" viewBox="0 0 40 40" fill="none"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M9.68407 0.351562C4.52996 0.351562 0.351562 4.52996 0.351562 9.68407C0.351562 14.8383 4.52996 19.0167 9.68407 19.0167H19.0167V9.68407C19.0167 4.52996 14.8383 0.351562 9.68407 0.351562ZM30.314 20.9813H20.9813V30.314C20.9813 35.4681 25.1597 39.6465 30.314 39.6465C35.4681 39.6465 39.6465 35.4681 39.6465 30.314C39.6465 25.1597 35.4681 20.9813 30.314 20.9813ZM0.351562 30.314C0.351562 35.4683 4.52996 39.6465 9.68407 39.6465C14.8383 39.6465 19.0167 35.4683 19.0167 30.314V20.9813H9.68407C4.52996 20.9813 0.351562 25.1597 0.351562 30.314ZM39.6465 9.68407C39.6465 4.52996 35.4683 0.351562 30.314 0.351562C25.1598 0.351562 20.9813 4.52996 20.9813 9.68407V19.0167H30.314C35.4683 19.0167 39.6465 14.8383 39.6465 9.68407Z"
-                            fill="#D71E3C" />
-                    </svg>
-                    Related Games
-                </view>
-                <view class="related-list">
-                    <view class="game-item" v-for="(item, index) in relatedList" :key="index" @click="toGame(item)">
-                        <image :src="item.img"></image>
-                        <view class="desc">
-                            <view class="name">{{ item.name }}</view>
-                            <view class="text" v-html="item.pot_desc"></view>
+                <view class="search" v-if="isSearch">
+                    <view class="search-list">
+                        <view class="game-item" v-for="(item, index) in gameList" :key="index" @click="toGame(item)">
+                            <image :src="item.img"></image>
+                            <view class="desc">
+                                <view class="name">{{ item.name }}</view>
+                                <view class="text" v-html="item.pot_desc"></view>
+                            </view>
                         </view>
                     </view>
                 </view>
             </view>
+            <view class="related" v-if="!isSearch">
+                    <view class="title">
+                        <svg width="1.25rem" height="1.25rem" viewBox="0 0 40 40" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M9.68407 0.351562C4.52996 0.351562 0.351562 4.52996 0.351562 9.68407C0.351562 14.8383 4.52996 19.0167 9.68407 19.0167H19.0167V9.68407C19.0167 4.52996 14.8383 0.351562 9.68407 0.351562ZM30.314 20.9813H20.9813V30.314C20.9813 35.4681 25.1597 39.6465 30.314 39.6465C35.4681 39.6465 39.6465 35.4681 39.6465 30.314C39.6465 25.1597 35.4681 20.9813 30.314 20.9813ZM0.351562 30.314C0.351562 35.4683 4.52996 39.6465 9.68407 39.6465C14.8383 39.6465 19.0167 35.4683 19.0167 30.314V20.9813H9.68407C4.52996 20.9813 0.351562 25.1597 0.351562 30.314ZM39.6465 9.68407C39.6465 4.52996 35.4683 0.351562 30.314 0.351562C25.1598 0.351562 20.9813 4.52996 20.9813 9.68407V19.0167H30.314C35.4683 19.0167 39.6465 14.8383 39.6465 9.68407Z"
+                                fill="#D71E3C" />
+                        </svg>
+                        Related Games
+                    </view>
+                    <view class="related-list">
+                        <view class="game-item" v-for="(item, index) in gameList" :key="index" @click="toGame(item)">
+                            <image :src="item.img"></image>
+                            <view class="desc">
+                                <view class="name">{{ item.name }}</view>
+                                <view class="text" v-html="item.pot_desc"></view>
+                            </view>
+                        </view>
+                    </view>
+                </view>
         </scroll-view>
         <leftMenu :isLeftMenu="isLeftMenu" :gameTypes="cates" @close="isLeftMenu = false">
         </leftMenu>
@@ -223,54 +234,105 @@ export default {
                     }
                 }
             }
-        }
 
-        .related {
-            margin-top: 2rem;
+            .search {
+                margin-top: 2rem;
 
-            .title {
-                font-family: Inter;
-                font-size: 1.25rem;
-                font-weight: 700;
-                text-align: left;
-                color: #D71E3C;
-                padding: 0.625rem;
-            }
+                .title {
+                    font-family: Inter;
+                    font-size: 1.25rem;
+                    font-weight: 700;
+                    text-align: left;
+                    color: #D71E3C;
+                    padding: 0.625rem;
+                }
 
-            .related-list {
+                .search-list {
 
-                .game-item {
-                    width: 100%;
-                    display: flex;
-                    margin-bottom: 0.625rem;
-                    image {
-                        width: 6.19rem;
-                        height: 6.19rem;
-                        border: 4px solid #D71E3C;
-                        border-radius: 0.25rem;
-                    }
+                    .game-item {
+                        width: 100%;
+                        display: flex;
+                        margin-bottom: 0.625rem;
 
-                    .desc {
-                        padding: 0.625rem 0.9375rem;
-
-                        .name {
-                            font-family: Inter;
-                            font-size: 0.78rem;
-                            font-weight: 700;
-                            text-align: left;
-                            color: #D71E3C;
+                        image {
+                            width: 6.19rem;
+                            height: 6.19rem;
+                            border: 4px solid #D71E3C;
+                            border-radius: 0.25rem;
                         }
-                        .text {
-                            color: #46484E;
-                            font-family: Inter;
-                            font-size: 0.78rem;
-                            font-weight: 400;
-                            text-align: left;
+
+                        .desc {
+                            padding: 0.625rem 0.9375rem;
+
+                            .name {
+                                font-family: Inter;
+                                font-size: 0.78rem;
+                                font-weight: 700;
+                                text-align: left;
+                                color: #D71E3C;
+                            }
+
+                            .text {
+                                color: #46484E;
+                                font-family: Inter;
+                                font-size: 0.78rem;
+                                font-weight: 400;
+                                text-align: left;
+                            }
                         }
                     }
                 }
             }
         }
+        .related {
+                margin-top: 2rem;
+
+                .title {
+                    font-family: Inter;
+                    font-size: 1.25rem;
+                    font-weight: 700;
+                    text-align: left;
+                    color: #D71E3C;
+                    padding: 0.625rem;
+                }
+
+                .related-list {
+
+                    .game-item {
+                        width: 100%;
+                        display: flex;
+                        margin-bottom: 0.625rem;
+
+                        image {
+                            width: 6.19rem;
+                            height: 6.19rem;
+                            border: 4px solid #D71E3C;
+                            border-radius: 0.25rem;
+                        }
+
+                        .desc {
+                            padding: 0.625rem 0.9375rem;
+
+                            .name {
+                                font-family: Inter;
+                                font-size: 0.78rem;
+                                font-weight: 700;
+                                text-align: left;
+                                color: #D71E3C;
+                            }
+
+                            .text {
+                                color: #46484E;
+                                font-family: Inter;
+                                font-size: 0.78rem;
+                                font-weight: 400;
+                                text-align: left;
+                            }
+                        }
+                    }
+                }
+            }
+
 
         .category {
             margin-top: 1.66rem;

@@ -14,7 +14,7 @@
                         <view class="game-name">
                             <view class="name">{{ gameDetail.name }}</view>
                             <view class="rate">
-                                <svg width="1.56rem" height="1.56rem" viewBox="0 0 50 50" fill="none"
+                                <svg class="rate-icon" width="1.56rem" height="1.56rem" viewBox="0 0 50 50" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
                                     <path
                                         d="M26.1008 0.710233L33.1553 15.7184L48.9521 18.1289C49.952 18.2819 50.3556 19.5637 49.6309 20.3002L38.1915 31.9987L40.8885 48.5087C41.0628 49.5513 40.0079 50.3452 39.1089 49.8478L24.9908 42.0616L10.8728 49.8478C9.97377 50.3452 8.92799 49.5513 9.09311 48.5087L11.7901 31.9987L0.36909 20.2907C-0.355619 19.5541 0.0480164 18.2724 1.04793 18.1193L16.8447 15.7088L23.9083 0.710233C24.3579 -0.236744 25.6605 -0.236744 26.1008 0.710233Z"
@@ -30,7 +30,7 @@
                             PLAY NOW
                         </view>
                     </view>
-                    <view class="desc">
+                    <view class="desc" v-if="gameDetail.pot_desc">
                         <view class="title">
                             Description
                         </view>
@@ -185,6 +185,9 @@ export default {
                             align-items: center;
                             padding: 0.25rem 0;
                             border-radius: 0.25rem;
+                            .rate-icon {
+                                margin-right: 0.5rem;
+                            }
                         }
                     }
                 }

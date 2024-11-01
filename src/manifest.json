@@ -72,7 +72,7 @@
     "h5" : {
         "router" : {
             "mode" : "history",
-            "base" : "/7/"
+            "base" : "/8/"
         },
         "dev" : {
             "NODE_ENV" : "development"
