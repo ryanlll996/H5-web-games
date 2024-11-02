@@ -1,10 +1,10 @@
 <template>
   <view class="index-wapper" :class="[currentTheme + '-theme']">
-    <c-navbar @toHome="toHome"
+    <c-navbar 
       @openLeftMenu="openLeftMenu"></c-navbar>
     <scroll-view class="scroll-view" scroll-y scroll-with-animation="true" @scrolltolower="loadChargeListMore"
       @scroll="onScroll" :scroll-into-view="scrollIntoViewId">
-      <Home v-if="currentTab === 0" :gameTypes="gameTypes" ref="home"></Home>
+      <Home v-if="currentTab === 0" :gameTypes="gameTypes" :hotGames="hotGames" :newGames="newGames" ref="home"></Home>
     </scroll-view>
 
     <leftMenu :isLeftMenu="isLeftMenu" :gameTypes="gameTypes" @close="isLeftMenu = false"
@@ -26,6 +26,14 @@ export default {
       isLeftMenu: false,
       scrollIntoViewId: '',
       gameTypes: [],
+      hotGames: [],
+      newGames: [],
+      hotParam: {
+          page: 1,
+          limit: 4,
+          orderBy: 'hot_num desc',
+          wid: ''
+      },
       gameParam: {
         page: 1,
         limit: 9,
@@ -68,6 +76,16 @@ export default {
       //   this.gameParam.tid = ''
       // });
     },
+    async getHotGames() {
+      this.hotParam.orderBy = 'hot_num desc'
+            const res = await this.$api.home.getNewGame(this.hotParam);
+            this.hotGames = res.data
+      },
+      async getNewGames() {
+        this.hotParam.orderBy = 'id desc'
+            const res = await this.$api.home.getNewGame(this.hotParam);
+            this.newGames = res.data
+      },
     async loadGame(tags, index) {
       const res = await this.$api.home.getGameList(this.gameParam);
       tags[index].list = res.data
@@ -91,6 +109,9 @@ export default {
       const currentPath = 'http://top3.game';
       const res = await this.$api.home.getWebsite({ url: currentPath })
       this.$store.dispatch('setChannelInfo', res);
+      this.hotParam.wid = res.wid
+      this.getNewGames()
+      this.getHotGames()
     },
   
     
@@ -122,9 +143,7 @@ export default {
     logout() {
       this.$store.dispatch('setTab', 0);
     },
-    toHome() {
-      this.$store.dispatch('setTab', 0);
-    },
+   
     onHotGamesClick() {
       this.isLeftMenu = false
       this.$store.dispatch('setTab', 1);
@@ -281,10 +300,7 @@ export default {
   height: 100%;
   position: absolute;
   width: 100%;
-  background-color: var(--home--bg);
-  background-image: url('https://front-n2.jingcdd.xyz/gjlm5810/1c3e8943-ea14-4cd3-a74e-5680eb507e93.png');
-  background-repeat: repeat;
-
+  background-color: #EBF4FF;
   // background-size: 100% 100%;
   .rank-import {
     position: absolute;

@@ -4,29 +4,17 @@
         <scroll-view class="group-list" scroll-y>
             <view class="games">
                 <view class="page-title" v-if="isSearch">
-                    Search Results for: ’{{gameParam.keyword}}’
+                    Search Results for: ’{{ gameParam.keyword }}’
                 </view>
                 <view class="page-title" v-else>
-                    {{categoryName}}
+                    {{ categoryName }}
                 </view>
                 <view class="game-list">
                     <view class="game-item" v-for="(item, index) in gameList" :key="index" @click="toGame(item)">
-                        <image :src="item.img"></image>
+                        <image mode="widthFix" :src="item.img"></image>
+                        <view class="name">{{ item.name }}</view>
                     </view>
                 </view>
-            </view>
-
-            <view class="category">
-                <view class="category-title">
-                    Categories
-                </view>
-                <view class="category-list">
-                    <view class="category-item" v-for="(item, index) in categoryList" :key="index"
-                        @click="onCategoryClick(item)">
-                        {{ item.name }}
-                    </view>
-                </view>
-
             </view>
         </scroll-view>
 
@@ -61,14 +49,14 @@ export default {
             isLeftMenu: false,
             gameParam: {
                 page: 1,
-                limit: 9,
+                limit: 20,
                 keyword: '',
                 orderBy: '',
                 tid: ''
             },
             hotParam: {
                 page: 1,
-                limit: 9,
+                limit: 20,
                 orderBy: 'hot_num desc',
                 wid: ''
             },
@@ -83,18 +71,18 @@ export default {
         this.categoryName = options.name
         this.gameParam.tid = options.id
         this.getTags()
-        if(options.search == 0){
+        if (options.search == 0) {
             this.isSearch = true
             this.gameParam.keyword = options.searchValue
             this.loadGame()
         }
-        if(options.isHot == 1){
+        if (options.isHot == 1) {
             this.isSearch = false
             this.hotParam.wid = options.id
             this.loadGame()
         }
 
-        if(options.isHot == 0){
+        if (options.isHot == 0) {
             this.isSearch = false
             this.hotParam.wid = this.channelInfo.wid
             this.getNewGames()
@@ -142,7 +130,7 @@ export default {
     position: absolute;
     width: 100%;
     box-sizing: border-box;
-    background-color: var(--home--bg);
+    background-color: #EBF4FF;
 
     .group-list {
         flex: 1;
@@ -151,31 +139,45 @@ export default {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+
         .games {
             flex: 1;
+
             .page-title {
                 font-family: Inter;
                 font-size: 1.25rem;
                 font-weight: 700;
                 text-align: left;
-                color: #FF9E0D;
+                color: #2565AF;
+                margin-bottom: 0.84rem;
             }
 
             .game-list {
-                display: grid;
+                display: flex;
                 gap: 0.84rem;
-                grid-template-columns: repeat(3, 1fr);
-
+                flex-wrap: wrap;
                 .game-item {
-                    width: 100%;
+                    width: calc(33.3% - 0.84rem);
                     // height: 6.56rem;
                     aspect-ratio: 210/210;
                     border-radius: 0.25rem;
 
                     image {
                         width: 100%;
-                        height: 100%;
                         border-radius: 0.25rem;
+                    }
+
+                    .name {
+                        text-align: center;
+                        font-family: Inter;
+                        font-size: 0.8125rem;
+                        font-weight: 400;
+                        text-align: center;
+                        color: #2565AF;
+                        text-overflow: ellipsis;
+                        overflow: hidden;
+                        white-space: nowrap;
+
                     }
                 }
             }
@@ -189,11 +191,13 @@ export default {
                 text-align: left;
                 color: #DD8400;
             }
+
             .category-list {
                 display: grid;
                 gap: 0.84rem;
                 grid-template-columns: repeat(3, 1fr);
                 margin-top: 0.84rem;
+
                 .category-item {
                     width: 100%;
                     // height: 6.56rem;

@@ -1,7 +1,7 @@
 <template>
     <up-popup :show="isLeftMenu" mode="left" :safeAreaInsetTop="true" :closeOnClickOverlay="true">
         <view class="menus">
-            <view class="search">
+            <!-- <view class="search">
                 <up-input class="search-input" placeholder="请输入内容" border="surround" v-model="searchValue" @change="onTextChange">
                     <template #suffix>
                         <svg @click="onSearchClick" width="1.5625rem" height="1.72rem" viewBox="0 0 50 55" fill="none"
@@ -19,25 +19,18 @@
                         </svg>
 
                     </template>
-                </up-input>
-            </view>
-            <view class="menus-item">
-                <svg width="0.28rem" height="0.84rem" viewBox="0 0 9 27" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect width="9" height="27" fill="#FF9E0D" />
-                </svg>
-                Hot Games
+</up-input>
+</view> -->
+            <view class="menus-title">
+                Menu
+                <view class="line"></view>
             </view>
             <view class="game-types">
                 <view class="game-types-item" @click="onHotGamesClick">
                     Hot Games
                 </view>
             </view>
-            <view class="menus-item">
-                <svg width="0.28rem" height="0.84rem" viewBox="0 0 9 27" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect width="9" height="27" fill="#FF9E0D" />
-                </svg>
-                Categories
-            </view>
+
             <view class="game-types">
                 <view class="game-types-item" v-if="gameTypes.length > 0" v-for="(item, index) in gameTypes"
                     :key="index" @click="onGamesClick(item)">
@@ -118,19 +111,25 @@ export default {
 }
 
 .menus {
-    padding: 0.9375rem;
     box-sizing: border-box;
     width: 100%;
     height: 100%;
     background-color: #FFFFFF;
+    padding: 0 0.72rem;
 
-    .search {
-        .search-input {
-            border: none;
-            background-color: #FFEDDE;
-            border-right: 0.25rem;
-            width: 10.59rem;
-            height: 2.44rem;
+    .menus-title {
+        padding: 0.72rem 0;
+        font-family: Inter;
+        font-size: 0.9375rem;
+        font-weight: 700;
+        text-align: left;
+        color: #2565AF;
+
+        .line {
+            width: 100%;
+            height: 1px;
+            background-color: #2565AF;
+            margin-top: 0.41rem;
         }
     }
 
@@ -145,19 +144,20 @@ export default {
 
     .game-types {
         margin-top: 0.8125rem;
+        width: 10.125rem;
 
         .game-types-item {
             font-family: Inter;
             font-size: 0.9375rem;
             font-weight: 700;
             text-align: center;
-            color: #FF9E0D;
+            color: #2565AF;
             margin-top: 0.8125rem;
             padding: 0.53rem 0;
             display: flex;
             align-items: center;
             justify-content: center;
-            background-color: #FFEDDE;
+            background-color: #DCECFF;
             border-radius: 0.25rem;
         }
     }
