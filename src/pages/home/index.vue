@@ -19,7 +19,7 @@
                 </view>
             </view>
             <view class="hot-list">
-                <view class="hot-item" v-for="(item, index) in hotGames" :key="index" @click="toGame(item)">
+                <view class="hot-item" v-for="(item, index) in hotGames" :key="index" @click="toHotGame(item)">
                     <view class="img">
                         <image mode="widthFix" :src="item.img" />
                     </view>
@@ -84,7 +84,7 @@
                 </view>
             </view>
             <view class="game-types-item-bottom">
-                <view class="game-item" v-for="(game) in newGames" :key="game.id" @click="toGame(game)">
+                <view class="game-item" v-for="(game) in newGames" :key="game.id">
                     <view class="img">
                         <image mode="heightFix" :src="game.img"></image>
                         <view class="info">
@@ -95,7 +95,7 @@
                         </view>
                     </view>
                     <view class="right">
-                        <view class="play-btn">
+                        <view class="play-btn" @click="toHotGame(game)">
                             play
                         </view>
                     </view>
@@ -145,6 +145,12 @@ export default {
             console.log(game)
             uni.redirectTo({
                 url: `/pages/gameDetail/index?id=${game.id}`
+            })
+        },
+        toHotGame(game) {
+            console.log(game)
+            uni.redirectTo({
+                url: `/pages/gameDetail/index?id=${game.gid}`
             })
         },
         toHotGames() {

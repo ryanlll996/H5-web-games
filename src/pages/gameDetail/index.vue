@@ -1,6 +1,6 @@
 <template>
     <view class="game-detail" :class="[currentTheme + '-theme']">
-        <c-navbar @toHome="toHome" @toBalance="toDeposit" @openLeftMenu="openLeftMenu"></c-navbar>
+        <c-navbar @openLeftMenu="openLeftMenu"></c-navbar>
         <scroll-view scroll-y class="game-detail__wrapper">
             <view class="game-detail__wrapper__content">
                 <view class="ad">
@@ -49,8 +49,7 @@
             </view>
         </scroll-view>
         <Footer />
-        <leftMenu :isLeftMenu="isLeftMenu" :gameTypes="categoryList" @close="isLeftMenu = false"
-            @onHotGamesClick="onHotGamesClick" @onGamesClick="onGamesClick">
+        <leftMenu :isLeftMenu="isLeftMenu" :gameTypes="categoryList" @close="isLeftMenu = false">
         </leftMenu>
     </view>
 </template>
