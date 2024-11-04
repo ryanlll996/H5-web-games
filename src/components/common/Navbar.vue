@@ -12,17 +12,17 @@
                     </svg>
                 </view>
                 <view class="nav-bar__left__logo">
-                   
+
 
                 </view>
             </view>
             <view class="nav-bar__wrapper__center">
                 <view class="logo" @click="toHome">
-                        <image mode="heightFix" src="./../../static/image/png/logo.png"></image>
-                    </view>
+                    <image mode="heightFix" src="./../../static/image/png/logo.png"></image>
+                </view>
             </view>
             <view class="nav-bar__wrapper__right">
-                <view class="logo">
+                <view class="logo" @click="showSearch">
                     <svg width="1.56rem" height="1.56rem" viewBox="0 0 50 50" fill="none"
                         xmlns="http://www.w3.org/2000/svg">
                         <path
@@ -32,6 +32,30 @@
 
                 </view>
             </view>
+        </view>
+        <view class="search" v-if="isShow">
+            <up-input class="search-input" placeholder="请输入内容" border="surround" v-model="searchValue"
+                @change="onTextChange">
+                <template #suffix>
+                    <view class="search-btn" @click="onSearchClick">
+                        <svg width="1.5625rem" height="1.72rem" viewBox="0 0 50 55" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <g clip-path="url(#clip0_37_79)">
+                            <path
+                                d="M49.8758 48.017L41.4108 38.6072C46.9452 29.1525 45.9267 16.4607 38.3419 8.20416C29.5678 -1.3441 15.3495 -1.3441 6.57642 8.20416C-2.19214 17.7503 -2.19214 33.2312 6.57642 42.7744C14.3849 51.2725 26.5056 52.1991 35.2631 45.5683L43.6037 54.8428L49.8758 48.017ZM10.863 38.1143C4.45688 31.1431 4.45688 19.8417 10.863 12.8691C17.267 5.89868 27.6535 5.89868 34.0546 12.8691C40.4613 19.8417 40.4613 31.1431 34.0546 38.1143C27.6525 45.0847 17.267 45.0847 10.863 38.1143Z"
+                                fill="#ffffff" />
+                        </g>
+                        <defs>
+                            <clipPath id="clip0_37_79">
+                                <rect width="50" height="54.4218" fill="white" transform="translate(0 0.421875)" />
+                            </clipPath>
+                        </defs>
+                    </svg>
+
+                    </view>
+                   
+                </template>
+            </up-input>
         </view>
     </view>
 </template>
@@ -47,7 +71,9 @@ export default {
     },
     data() {
         return {
-            isOpen: false
+            isOpen: false,
+            searchValue: '',
+            isShow: false
         };
     },
     computed: {
@@ -72,6 +98,19 @@ export default {
                 url: '/pages/index/index'
             })
         },
+        onSearchClick() {
+            if (this.searchValue) {
+                uni.redirectTo({
+                    url: `/pages/group/index?searchValue=${this.searchValue}&&search=0`
+                })
+            }
+        },
+        onTextChange(value) {
+            this.searchValue = value
+        },
+        showSearch() {
+            this.isShow = !this.isShow;
+        }
     }
 
 };
@@ -91,22 +130,45 @@ export default {
 .nav-bar {
     background: #fff;
     width: 100%;
-
+    .search{
+        width: 100%;
+        background-color: #EBF4FF;
+        padding: 0.78rem 0.9375rem;
+        .search-input{
+            background-color: #fff;
+            border: 2px solid #2565AF !important;
+            padding: 0 !important;
+            padding-left: 6px !important;
+            height: 2.56rem;
+            border-radius: 0.5rem;
+            .search-btn{
+                background-color: #2565AF;
+                height: 2.56rem;
+                border-radius: 0.5rem;
+                padding: 0.5rem 1.03rem;
+                box-sizing: border-box;
+            }
+        }
+    }
     &__wrapper {
         display: flex;
         align-items: center;
         justify-content: space-between;
         height: 2.75rem;
         padding: 0 0.75rem;
+
         &__center {
             height: 100%;
+
             .logo {
                 height: 100%;
-                image{
+
+                image {
                     height: 100%;
                 }
             }
         }
+
         .nav-bar__left {
             display: flex;
             align-items: center;

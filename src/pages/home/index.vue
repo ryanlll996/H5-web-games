@@ -6,7 +6,7 @@
         <view class="hot-games">
             <view class="title">
                 <view class="title-text">Hot Games</view>
-                <view class="desc" @click="toCategory(item)">
+                <view class="desc" @click="toHotGames">
                     <svg width="1.5rem" height="1.5rem" viewBox="0 0 48 48" fill="none"
                         xmlns="http://www.w3.org/2000/svg">
                         <path
@@ -69,7 +69,7 @@
 <view class="game-types-item">
             <view class="game-types-item-top">
                 <view class="title">New Games</view>
-                <view class="desc" @click="toCategory(item)">
+                <view class="desc" @click="toNewGames">
 
                     <svg width="1.5rem" height="1.5rem" viewBox="0 0 48 48" fill="none"
                         xmlns="http://www.w3.org/2000/svg">
@@ -147,6 +147,16 @@ export default {
                 url: `/pages/gameDetail/index?id=${game.id}`
             })
         },
+        toHotGames() {
+            uni.redirectTo({
+                url: `/pages/group/index?isHot=0`
+            })
+        },
+        toNewGames() {
+            uni.redirectTo({
+                url: `/pages/group/index?isNew=0`
+            })
+        },
         toCategory(item) {
             uni.redirectTo({
                 url: `/pages/group/index?id=${item.id}&&name=${item.name}&&isHot=1`
@@ -183,7 +193,7 @@ export default {
                 font-size: 1.25rem;
                 font-weight: 700;
                 text-align: left;
-                color: #DD8400;
+                color: #2565AF;
                 padding: 0.5rem 0;
             }
         }

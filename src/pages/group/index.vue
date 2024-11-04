@@ -1,7 +1,7 @@
 <template>
     <view class="group-container" :class="[currentTheme + '-theme']">
         <c-navbar @toHome="toHome" @toBalance="toDeposit" @openLeftMenu="openLeftMenu"></c-navbar>
-        <scroll-view class="group-list" scroll-y>
+        <scroll-view class="group-list" scroll-y @scrolltolower="loadMore">
             <view class="games">
                 <view class="page-title" v-if="isSearch">
                     Search Results for: ’{{ gameParam.keyword }}’
@@ -63,31 +63,44 @@ export default {
             gameList: [],
             categoryList: [],
             categoryName: '',
-            isSearch: false
+            isSearch: false,
+            scrollFlag: 0,
+            status: 'loadMore'
         }
     },
     onLoad(options) {
         console.log(options)
         this.categoryName = options.name
-        this.gameParam.tid = options.id
         this.getTags()
         if (options.search == 0) {
             this.isSearch = true
             this.gameParam.keyword = options.searchValue
+            this.scrollFlag = 0
             this.loadGame()
         }
         if (options.isHot == 1) {
             this.isSearch = false
-            this.hotParam.wid = options.id
+            this.gameParam.tid = options.id
+            this.scrollFlag = 0
             this.loadGame()
         }
-
+        if(options.isNew == 0){
+            this.isSearch = false
+            this.hotParam.wid = this.channelInfo.wid
+            this.hotParam.orderBy = 'id desc'
+            this.categoryName = 'New Games'
+            this.scrollFlag = 1
+            this.getNewGames()
+        }
         if (options.isHot == 0) {
             this.isSearch = false
             this.hotParam.wid = this.channelInfo.wid
+            this.hotParam.orderBy = 'hot_num desc'
+            this.categoryName = 'Hot Games'
+            this.scrollFlag = 1
             this.getNewGames()
         }
-
+        
     },
     mounted() {
     },
@@ -100,11 +113,17 @@ export default {
         async loadGame() {
             const res = await this.$api.home.getGameList(this.gameParam);
             console.log('loadGame', res)
-            this.gameList = res.data
+            this.gameList = res.data.concat(this.gameList)
+            if (res.data.length < this.gameParam.limit) {
+                this.status = 'nomore'
+            }
         },
         async getNewGames() {
             const res = await this.$api.home.getNewGame(this.hotParam);
-            this.gameList = res.data
+            this.gameList = res.data.concat(this.gameList)
+            if (res.data.length < this.hotParam.limit) {
+                this.status = 'nomore'
+            }
         },
         toGame(item) {
             uni.redirectTo({
@@ -117,6 +136,19 @@ export default {
         onCategoryClick(item) {
             this.gameParam.tid = item.id
             this.loadGame()
+        },
+        loadMore() {
+            console.log('loadMore')
+            if (this.status == 'nomore') {
+                return
+            }
+            if (this.scrollFlag == 0) {
+                this.gameParam.page++
+                this.loadGame()
+            } else if (this.scrollFlag == 1) {
+                this.hotParam.page++
+                this.getNewGames()
+            }
         }
     }
 }

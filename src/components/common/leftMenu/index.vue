@@ -1,26 +1,7 @@
 <template>
     <up-popup :show="isLeftMenu" mode="left" :safeAreaInsetTop="true" :closeOnClickOverlay="true">
         <view class="menus">
-            <!-- <view class="search">
-                <up-input class="search-input" placeholder="请输入内容" border="surround" v-model="searchValue" @change="onTextChange">
-                    <template #suffix>
-                        <svg @click="onSearchClick" width="1.5625rem" height="1.72rem" viewBox="0 0 50 55" fill="none"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <g clip-path="url(#clip0_37_79)">
-                                <path
-                                    d="M49.8758 48.017L41.4108 38.6072C46.9452 29.1525 45.9267 16.4607 38.3419 8.20416C29.5678 -1.3441 15.3495 -1.3441 6.57642 8.20416C-2.19214 17.7503 -2.19214 33.2312 6.57642 42.7744C14.3849 51.2725 26.5056 52.1991 35.2631 45.5683L43.6037 54.8428L49.8758 48.017ZM10.863 38.1143C4.45688 31.1431 4.45688 19.8417 10.863 12.8691C17.267 5.89868 27.6535 5.89868 34.0546 12.8691C40.4613 19.8417 40.4613 31.1431 34.0546 38.1143C27.6525 45.0847 17.267 45.0847 10.863 38.1143Z"
-                                    fill="#B25300" />
-                            </g>
-                            <defs>
-                                <clipPath id="clip0_37_79">
-                                    <rect width="50" height="54.4218" fill="white" transform="translate(0 0.421875)" />
-                                </clipPath>
-                            </defs>
-                        </svg>
-
-                    </template>
-</up-input>
-</view> -->
+            
             <view class="menus-title">
                 Menu
                 <view class="line"></view>
@@ -59,7 +40,6 @@ export default {
     data() {
         return {
             title: 'Hello',
-            searchValue: ''
         }
     },
     computed: {
@@ -80,16 +60,6 @@ export default {
             uni.redirectTo({
                 url: `/pages/group/index?id=${item.id}&&name=${item.name}&&isHot=1`
             })
-        },
-        onTextChange(value) {
-            this.searchValue = value
-        },
-        onSearchClick() {
-            if (this.searchValue) {
-                uni.redirectTo({
-                    url: `/pages/group/index?searchValue=${this.searchValue}&&search=0`
-                })
-            }
         }
     }
 }
