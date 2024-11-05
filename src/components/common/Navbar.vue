@@ -154,14 +154,16 @@ export default {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        height: 2.75rem;
+        height: 3.375rem;
         padding: 0 0.75rem;
 
         &__center {
             height: 100%;
-
+            display: flex;
+            align-items: center;
+            justify-content: center;
             .logo {
-                height: 100%;
+                height: 1.4375rem;
 
                 image {
                     height: 100%;
@@ -172,7 +174,8 @@ export default {
         .nav-bar__left {
             display: flex;
             align-items: center;
-            width: 50%;
+            width: 33.3%;
+            flex: 1;
             text-overflow: ellipsis;
             overflow: hidden;
 
