@@ -19,7 +19,7 @@
                         </view>
                     </view>
                     <view class="play-btn">
-                        <view class="btn">
+                        <view class="btn" @click="playGame(gameDetail)">
                             PLAY NOW
                         </view>
                     </view>
@@ -108,6 +108,12 @@ export default {
             console.log(game)
             uni.redirectTo({
                 url: `/pages/gameDetail/index?id=${game.id}`
+            })
+        },
+        playGame(game) {
+            this.$store.dispatch('setGamePath', game.url)
+            uni.navigateTo({
+                url: `/pages/webview/index`,
             })
         }
     }
