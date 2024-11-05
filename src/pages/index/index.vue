@@ -3,7 +3,7 @@
     <c-navbar @toHome="toHome" @openLeftMenu="openLeftMenu"></c-navbar>
     <scroll-view class="scroll-view" scroll-y scroll-with-animation="true" @scrolltolower="loadChargeListMore"
       @scroll="onScroll" :scroll-into-view="scrollIntoViewId">
-      <Home v-if="currentTab === 0" :newGames="newGameList" :hotGames="hotGameList" ref="home"></Home>
+      <Home v-if="currentTab === 0" :newGames="newGameList" :cateGames="cateGames" ref="home"></Home>
     </scroll-view>
 
     <leftMenu :isLeftMenu="isLeftMenu" :gameTypes="cates" @close="isLeftMenu = false"
@@ -27,6 +27,7 @@ export default {
       gameTypes: [],
       newGameList: [],
       hotGameList: [],
+      cateGames: [],
       gameParam: {
         page: 1,
         limit: 9,
@@ -49,16 +50,16 @@ export default {
     this.getNewGames()
     this.getHotGames()
     this.getTas()
-    // this.getCategoryGame()
+    this.getCategoryGame()
   },
   onShow() {
 
   },
   methods: {
     async getCategoryGame() {
-      const res = await this.$api.home.getCatGame({ num: 4 })
+      const res = await this.$api.home.getCatGame({ num: 6 })
       console.log(res)
-      this.gameTypes = res
+      this.cateGames = res
     },
     async getTas() {
       const res = await this.$api.home.getHotTag()
@@ -247,7 +248,7 @@ export default {
   height: 100%;
   position: absolute;
   width: 100%;
-  background-color: #433C39;
+  background-color: #18253F;
 
   // background-size: 100% 100%;
   .rank-import {

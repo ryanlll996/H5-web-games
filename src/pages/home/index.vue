@@ -1,40 +1,60 @@
 <template>
     <view class="game-types">
-        <view class="ad">
+        <!-- <view class="ad">
 
-        </view>
+        </view> -->
         <view class="game-types-item">
             <view class="game-types-item-top">
-                <svg width="1.625rem" height="0.91rem" viewBox="0 0 52 29" fill="none"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path
-                        d="M22.284 16.1434V12.7148C22.284 12.2331 21.9086 11.8577 21.4269 11.8577H16.284V6.71484C16.284 6.23313 15.9086 5.8577 15.4269 5.8577H11.9983C11.5166 5.8577 11.1411 6.23313 11.1411 6.71484V11.8577H5.99829C5.51657 11.8577 5.14114 12.2331 5.14114 12.7148V16.1434C5.14114 16.6251 5.51657 17.0006 5.99829 17.0006H11.1411V22.1434C11.1411 22.6251 11.5166 23.0006 11.9983 23.0006H15.4269C15.9086 23.0006 16.284 22.6251 16.284 22.1434V17.0006H21.4269C21.9086 17.0006 22.284 16.6251 22.284 16.1434ZM37.7126 17.8577C37.7126 15.9566 36.1851 14.4291 34.284 14.4291C32.3829 14.4291 30.8554 15.9566 30.8554 17.8577C30.8554 19.7588 32.3829 21.2863 34.284 21.2863C36.1851 21.2863 37.7126 19.7588 37.7126 17.8577ZM44.5697 11.0006C44.5697 9.09941 43.0423 7.57199 41.1411 7.57199C39.24 7.57199 37.7126 9.09941 37.7126 11.0006C37.7126 12.9017 39.24 14.4291 41.1411 14.4291C43.0423 14.4291 44.5697 12.9017 44.5697 11.0006ZM51.4269 14.4291C51.4269 22.0097 45.2931 28.1434 37.7126 28.1434C34.378 28.1416 31.1587 26.9224 28.6594 24.7148H22.7674C20.2681 26.9224 17.0489 28.1416 13.7143 28.1434C6.13371 28.1434 0 22.0097 0 14.4291C0 6.84856 6.13371 0.714844 13.7143 0.714844H37.7143C45.2949 0.714844 51.4286 6.84856 51.4286 14.4291H51.4269Z"
-                        fill="#474747" />
-                </svg>
+                <view class="top-left">
+                    <svg width="1.625rem" height="0.91rem" viewBox="0 0 52 29" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M22.284 16.1434V12.7148C22.284 12.2331 21.9086 11.8577 21.4269 11.8577H16.284V6.71484C16.284 6.23313 15.9086 5.8577 15.4269 5.8577H11.9983C11.5166 5.8577 11.1411 6.23313 11.1411 6.71484V11.8577H5.99829C5.51657 11.8577 5.14114 12.2331 5.14114 12.7148V16.1434C5.14114 16.6251 5.51657 17.0006 5.99829 17.0006H11.1411V22.1434C11.1411 22.6251 11.5166 23.0006 11.9983 23.0006H15.4269C15.9086 23.0006 16.284 22.6251 16.284 22.1434V17.0006H21.4269C21.9086 17.0006 22.284 16.6251 22.284 16.1434ZM37.7126 17.8577C37.7126 15.9566 36.1851 14.4291 34.284 14.4291C32.3829 14.4291 30.8554 15.9566 30.8554 17.8577C30.8554 19.7588 32.3829 21.2863 34.284 21.2863C36.1851 21.2863 37.7126 19.7588 37.7126 17.8577ZM44.5697 11.0006C44.5697 9.09941 43.0423 7.57199 41.1411 7.57199C39.24 7.57199 37.7126 9.09941 37.7126 11.0006C37.7126 12.9017 39.24 14.4291 41.1411 14.4291C43.0423 14.4291 44.5697 12.9017 44.5697 11.0006ZM51.4269 14.4291C51.4269 22.0097 45.2931 28.1434 37.7126 28.1434C34.378 28.1416 31.1587 26.9224 28.6594 24.7148H22.7674C20.2681 26.9224 17.0489 28.1416 13.7143 28.1434C6.13371 28.1434 0 22.0097 0 14.4291C0 6.84856 6.13371 0.714844 13.7143 0.714844H37.7143C45.2949 0.714844 51.4286 6.84856 51.4286 14.4291H51.4269Z"
+                            fill="#E8BFA7" />
+                    </svg>
 
-                <view class="title">New Games</view>
+                    <view class="title">New Games</view>
+                </view>
+                <view class="top-right">
+                    <svg @click="toNewGame" width="28" height="48" viewBox="0 0 28 48" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M27.2344 23.8884C27.2344 24.7447 26.9074 25.601 26.2552 26.2538L5.7112 46.7972C4.40432 48.1041 2.28592 48.1041 0.97968 46.7972C-0.32656 45.4909 -0.32656 43.3725 0.97968 42.0657L19.1576 23.8884L0.980321 5.7111C-0.325919 4.40422 -0.325919 2.28582 0.980321 0.979584C2.28656 -0.327297 4.40496 -0.327297 5.71184 0.979584L26.2558 21.5229C26.908 22.1757 27.2344 23.0321 27.2344 23.8884Z"
+                            fill="#E8BFA7" />
+                    </svg>
+                </view>
             </view>
             <view class="game-types-item-bottom">
-                <view class="game-item" v-for="(game) in newGames" :key="game.id" @click="toGame(game)">
-                    <image :src="game.img" mode="widthFix"></image>
+                <view class="game-item" v-for="(game) in newGames" :key="game.id" @click="toNewItemGame(game)">
+                    <image :src="game.img" mode="aspectFill"></image>
                     <view class="game-name">{{ game.name }}</view>
                 </view>
             </view>
         </view>
-        <view class="game-types-item">
+        <view class="game-types-item" v-if="cateGames.length > 0" v-for="(item, index) in cateGames" :key="index">
             <view class="game-types-item-top">
-                <svg width="1.625rem" height="0.91rem" viewBox="0 0 52 29" fill="none"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path
-                        d="M22.284 16.1434V12.7148C22.284 12.2331 21.9086 11.8577 21.4269 11.8577H16.284V6.71484C16.284 6.23313 15.9086 5.8577 15.4269 5.8577H11.9983C11.5166 5.8577 11.1411 6.23313 11.1411 6.71484V11.8577H5.99829C5.51657 11.8577 5.14114 12.2331 5.14114 12.7148V16.1434C5.14114 16.6251 5.51657 17.0006 5.99829 17.0006H11.1411V22.1434C11.1411 22.6251 11.5166 23.0006 11.9983 23.0006H15.4269C15.9086 23.0006 16.284 22.6251 16.284 22.1434V17.0006H21.4269C21.9086 17.0006 22.284 16.6251 22.284 16.1434ZM37.7126 17.8577C37.7126 15.9566 36.1851 14.4291 34.284 14.4291C32.3829 14.4291 30.8554 15.9566 30.8554 17.8577C30.8554 19.7588 32.3829 21.2863 34.284 21.2863C36.1851 21.2863 37.7126 19.7588 37.7126 17.8577ZM44.5697 11.0006C44.5697 9.09941 43.0423 7.57199 41.1411 7.57199C39.24 7.57199 37.7126 9.09941 37.7126 11.0006C37.7126 12.9017 39.24 14.4291 41.1411 14.4291C43.0423 14.4291 44.5697 12.9017 44.5697 11.0006ZM51.4269 14.4291C51.4269 22.0097 45.2931 28.1434 37.7126 28.1434C34.378 28.1416 31.1587 26.9224 28.6594 24.7148H22.7674C20.2681 26.9224 17.0489 28.1416 13.7143 28.1434C6.13371 28.1434 0 22.0097 0 14.4291C0 6.84856 6.13371 0.714844 13.7143 0.714844H37.7143C45.2949 0.714844 51.4286 6.84856 51.4286 14.4291H51.4269Z"
-                        fill="#474747" />
-                </svg>
+                <view class="top-left">
+                    <svg width="1.625rem" height="0.91rem" viewBox="0 0 52 29" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M22.284 16.1434V12.7148C22.284 12.2331 21.9086 11.8577 21.4269 11.8577H16.284V6.71484C16.284 6.23313 15.9086 5.8577 15.4269 5.8577H11.9983C11.5166 5.8577 11.1411 6.23313 11.1411 6.71484V11.8577H5.99829C5.51657 11.8577 5.14114 12.2331 5.14114 12.7148V16.1434C5.14114 16.6251 5.51657 17.0006 5.99829 17.0006H11.1411V22.1434C11.1411 22.6251 11.5166 23.0006 11.9983 23.0006H15.4269C15.9086 23.0006 16.284 22.6251 16.284 22.1434V17.0006H21.4269C21.9086 17.0006 22.284 16.6251 22.284 16.1434ZM37.7126 17.8577C37.7126 15.9566 36.1851 14.4291 34.284 14.4291C32.3829 14.4291 30.8554 15.9566 30.8554 17.8577C30.8554 19.7588 32.3829 21.2863 34.284 21.2863C36.1851 21.2863 37.7126 19.7588 37.7126 17.8577ZM44.5697 11.0006C44.5697 9.09941 43.0423 7.57199 41.1411 7.57199C39.24 7.57199 37.7126 9.09941 37.7126 11.0006C37.7126 12.9017 39.24 14.4291 41.1411 14.4291C43.0423 14.4291 44.5697 12.9017 44.5697 11.0006ZM51.4269 14.4291C51.4269 22.0097 45.2931 28.1434 37.7126 28.1434C34.378 28.1416 31.1587 26.9224 28.6594 24.7148H22.7674C20.2681 26.9224 17.0489 28.1416 13.7143 28.1434C6.13371 28.1434 0 22.0097 0 14.4291C0 6.84856 6.13371 0.714844 13.7143 0.714844H37.7143C45.2949 0.714844 51.4286 6.84856 51.4286 14.4291H51.4269Z"
+                            fill="#E8BFA7" />
+                    </svg>
 
-                <view class="title">Trending Games</view>
+                    <view class="title">{{ item.name }}</view>
+                </view>
+                <view class="top-right">
+                    <svg @click="toCategory(item)" width="28" height="48" viewBox="0 0 28 48" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M27.2344 23.8884C27.2344 24.7447 26.9074 25.601 26.2552 26.2538L5.7112 46.7972C4.40432 48.1041 2.28592 48.1041 0.97968 46.7972C-0.32656 45.4909 -0.32656 43.3725 0.97968 42.0657L19.1576 23.8884L0.980321 5.7111C-0.325919 4.40422 -0.325919 2.28582 0.980321 0.979584C2.28656 -0.327297 4.40496 -0.327297 5.71184 0.979584L26.2558 21.5229C26.908 22.1757 27.2344 23.0321 27.2344 23.8884Z"
+                            fill="#E8BFA7" />
+                    </svg>
+                </view>
             </view>
             <view class="game-types-item-bottom">
-                <view class="game-item" v-for="(game) in hotGames" :key="game.id" @click="toGame(game)">
-                    <image :src="game.img" mode="widthFix"></image>
+                <view class="game-item" v-for="(game) in item.data" :key="game.id" @click="toGame(game)">
+                    <image :src="game.img" mode="aspectFill"></image>
                     <view class="game-name">{{ game.name }}</view>
                 </view>
             </view>
@@ -52,7 +72,7 @@ export default {
                 return []
             }
         },
-        hotGames: {
+        cateGames: {
             type: Array,
             default: () => {
                 return []
@@ -72,15 +92,25 @@ export default {
         ...mapGetters(['isLogin', 'currentTheme'])
     },
     methods: {
+        toNewItemGame(item) {
+            uni.redirectTo({
+                url: `/pages/gameDetail/index?id=${item.gid}`
+            })
+        },
         toGame(game) {
             console.log(game)
             uni.redirectTo({
-                url: `/pages/gameDetail/index?id=${game.gid}`
+                url: `/pages/gameDetail/index?id=${game.id}`
             })
         },
         toCategory(item) {
             uni.redirectTo({
                 url: `/pages/group/index?id=${item.id}&&name=${item.name}&&isHot=1`
+            })
+        },
+        toNewGame() {
+            uni.redirectTo({
+                url: `/pages/group/index?name=New Games&&isNew=0`
             })
         }
     }
@@ -102,46 +132,60 @@ export default {
     }
 
     .game-types-item {
-        padding: 1.34rem 0.625rem;
+        padding: 0 0.625rem;
 
         .game-types-item-top {
             display: flex;
             align-items: center;
-            justify-content: flex-start;
-            background-color: #E1FF00;
-            padding: 0.625rem;
-            margin-bottom: 1.25rem;
-            .title {
-                font-family: Inter;
-                font-size: 1.25rem;
-                font-weight: 700;
-                text-align: left;
-                color: #342925;
-                margin-left: 0.44rem;
+            justify-content: space-between;
+            padding: 1.9rem 0.625rem;
+
+            .top-left {
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+
+                .title {
+                    font-family: Inter;
+                    font-size: 1.25rem;
+                    font-weight: 700;
+                    text-align: left;
+                    color: #E8BFA7;
+                    margin-left: 0.44rem;
+                }
             }
         }
 
         .game-types-item-bottom {
             display: flex;
             flex-wrap: wrap;
-            justify-content: space-between;
-            gap: 1.25rem;
+            justify-content: flex-start;
+            gap: 0.8125rem;
+
             .game-item {
-                width: calc(50% - 1.25rem);
+                width: calc(33.3% - 0.8125rem);
+                aspect-ratio: 210/286;
+                border-radius: 0.5rem;
+                position: relative;
+
                 image {
                     width: 100%;
-                    border: 8px solid #E1FF00                
+                    height: 100%;
+                    border-radius: 0.5rem;
                 }
-                .game-name{
+
+                .game-name {
+                    width: 100%;
                     font-family: Inter;
-                    font-size: 0.875rem;
-                    font-weight: 700;
+                    font-size: 0.75rem;
+                    font-weight: 400;
                     text-align: center;
-                    color: #E1FF00;
+                    color: #FFFFFF;
                     white-space: nowrap;
                     overflow: hidden;
                     text-overflow: ellipsis;
-                    margin-top: 1rem;
+                    position: absolute;
+                    bottom: 0.8125rem;
                 }
             }
         }

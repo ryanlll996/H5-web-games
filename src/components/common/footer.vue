@@ -16,13 +16,13 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: #342925;
+    background-color: #18253F;
     .footer-line {
         font-family: Inter;
         font-size: 0.625rem;
         font-weight: 400;
         text-align: left;
-        color: #fff;
+        color: #E8BFA7;
         &.last{
             margin-top: 0.625rem;
         }
