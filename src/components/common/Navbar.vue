@@ -150,7 +150,7 @@ export default {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        height: 2.75rem;
+        height: 3.125rem;
         padding: 0 0.75rem;
 
         .nav-bar__left {
@@ -162,7 +162,7 @@ export default {
 
             .logo {
                 margin-left: 0.3125rem;
-                height: 2.66rem;
+                height: 1.94rem;
                 display: flex;
                 align-items: center;
 
