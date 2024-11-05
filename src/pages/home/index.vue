@@ -1,8 +1,8 @@
 <template>
     <view class="game-types">
-        <view class="ad">
+        <!-- <view class="ad">
 
-        </view>
+        </view> -->
        <view class="game-types-item" v-for="(item, index) in gameTypes" :key="index">
             <view class="game-types-item-top">
                 <view class="title">{{ item.name }}</view>

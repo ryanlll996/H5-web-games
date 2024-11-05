@@ -3,9 +3,9 @@
         <c-navbar @toHome="toHome" @toBalance="toDeposit" @openLeftMenu="openLeftMenu"></c-navbar>
         <scroll-view scroll-y class="game-detail__wrapper">
             <view class="game-detail__wrapper__content">
-                <view class="ad">
+                <!-- <view class="ad">
 
-                </view>
+                </view> -->
                 <view class="game-info">
                     <view class="game-img">
                         <view class="img">
