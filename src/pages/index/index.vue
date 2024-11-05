@@ -88,7 +88,7 @@ export default {
       // const { origin, pathname } = location;
       // const baseUrl = origin + pathname.replace(/\/\d+\/?$/, '');
       // const currentPath = baseUrl === 'http://localhost:5174/' ? 'http://top3.game' : baseUrl.slice(0, -1);
-      const currentPath = 'http://top3.game';
+      const currentPath = 'https://kpqwin.com';
       const res = await this.$api.home.getWebsite({ url: currentPath })
       this.$store.dispatch('setChannelInfo', res);
     },
