@@ -1,7 +1,7 @@
 <template>
     <view class="group-container" :class="[currentTheme + '-theme']">
         <c-navbar @toHome="toHome" @toBalance="toDeposit" @openLeftMenu="openLeftMenu"></c-navbar>
-        <scroll-view class="group-list" scroll-y>
+        <scroll-view class="group-list" scroll-y @scrolltolower="loadMore">
             <view class="games">
                 <view class="page-title" v-if="isSearch">
                     Search Results for: ’{{ gameParam.keyword }}’
@@ -67,7 +67,8 @@ export default {
             },
             gameList: [],
             categoryName: '',
-            isSearch: false
+            isSearch: false,
+            status: 'loading'
         }
     },
     onLoad(options) {
@@ -97,7 +98,8 @@ export default {
         async loadGame() {
             const res = await this.$api.home.getGameList(this.gameParam);
             console.log('loadGame', res)
-            this.gameList = res.data
+            this.gameList = this.gameList.concat(res.data)
+            this.status = res.data.length < this.gameParam.limit ? 'nomore' : 'loading'
         },
         async getNewGames() {
             const res = await this.$api.home.getNewGame(this.hotParam);
@@ -114,6 +116,12 @@ export default {
         onCategoryClick(item) {
             this.gameParam.tid = item.id
             this.loadGame()
+        },
+        loadMore() {
+            this.gameParam.page++
+            if (this.status !== 'nomore') {
+                this.loadGame()
+            }
         }
     }
 }
