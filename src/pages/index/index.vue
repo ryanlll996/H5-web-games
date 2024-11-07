@@ -62,7 +62,7 @@ export default {
       this.cateGames = res
     },
     async getTas() {
-      const res = await this.$api.home.getHotTag()
+      const res = await this.$api.home.getTags({wid: this.channelInfo.wid})
       console.log(res)
       this.gameTypes = res
       this.$store.dispatch('setCates', res);
