@@ -100,7 +100,7 @@ export default {
     async getChannelByUrl() {
       const { origin, pathname } = location;
       const baseUrl = origin + pathname;
-      const currentPath = 'http://top3.game';
+      const currentPath = '777pggo.com';
       const res = await this.$api.home.getWebsite({ url: currentPath })
       this.$store.dispatch('setChannelInfo', res);
     },
