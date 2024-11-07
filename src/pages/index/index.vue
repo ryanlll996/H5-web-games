@@ -7,7 +7,7 @@
       <Home v-if="currentTab === 0" :gameTypes="gameTypes" ref="home"></Home>
     </scroll-view>
 
-    <leftMenu :isLeftMenu="isLeftMenu" :gameTypes="gameTypes" @close="isLeftMenu = false"
+    <leftMenu :isLeftMenu="isLeftMenu" :gameTypes="tags" @close="isLeftMenu = false"
       @onHotGamesClick="onHotGamesClick" @onGamesClick="onGamesClick">
     </leftMenu>
     <Footer/>
@@ -26,6 +26,7 @@ export default {
       isLeftMenu: false,
       scrollIntoViewId: '',
       gameTypes: [],
+      tags: [],
       gameParam: {
         page: 1,
         limit: 9,
@@ -59,14 +60,8 @@ export default {
       this.gameTypes = res
     },
     async getTas(){
-      const res = await this.$api.home.getHotTag()
-      console.log(res)
-      // res.forEach((element, index) => {
-      //   this.gameParam.limit = 4
-      //   this.gameParam.tid = element.id
-      //   this.loadGame(res, index)
-      //   this.gameParam.tid = ''
-      // });
+      const res = await this.$api.home.getTags({wid: this.channelInfo.wid})
+      this.tags = res
     },
     async loadGame(tags, index) {
       const res = await this.$api.home.getGameList(this.gameParam);
@@ -281,9 +276,7 @@ export default {
   height: 100%;
   position: absolute;
   width: 100%;
-  background-color: var(--home--bg);
-  background-image: url('https://front-n2.jingcdd.xyz/gjlm5810/1c3e8943-ea14-4cd3-a74e-5680eb507e93.png');
-  background-repeat: repeat;
+  background-color: #FFFFFF;
 
   // background-size: 100% 100%;
   .rank-import {

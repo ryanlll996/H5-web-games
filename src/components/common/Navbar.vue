@@ -88,7 +88,7 @@ export default {
 }
 
 .nav-bar {
-    background: var(--primary-color);
+    background: #B25300;
     width: 100%;
 
     &__wrapper {

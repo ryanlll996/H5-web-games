@@ -1,7 +1,7 @@
 <template>
     <view class="group-container" :class="[currentTheme + '-theme']">
         <c-navbar @toHome="toHome" @toBalance="toDeposit" @openLeftMenu="openLeftMenu"></c-navbar>
-        <scroll-view class="group-list" scroll-y>
+        <scroll-view class="group-list" scroll-y @scrolltolower="loadMore">
             <view class="games">
                 <view class="page-title" v-if="isSearch">
                     Search Results for: ’{{gameParam.keyword}}’
@@ -75,7 +75,9 @@ export default {
             gameList: [],
             categoryList: [],
             categoryName: '',
-            isSearch: false
+            isSearch: false,
+            isHot: false,
+            status: 'loading'
         }
     },
     onLoad(options) {
@@ -85,17 +87,20 @@ export default {
         this.getTags()
         if(options.search == 0){
             this.isSearch = true
+            this.isHot = false
             this.gameParam.keyword = options.searchValue
             this.loadGame()
         }
         if(options.isHot == 1){
             this.isSearch = false
+            this.isHot = false
             this.hotParam.wid = options.id
             this.loadGame()
         }
 
         if(options.isHot == 0){
             this.isSearch = false
+            this.isHot = true
             this.hotParam.wid = this.channelInfo.wid
             this.getNewGames()
         }
@@ -105,23 +110,34 @@ export default {
     },
     methods: {
         async getTags() {
-            const res = await this.$api.home.getTags()
+            const res = await this.$api.home.getTags({
+                wid: this.channelInfo.wid})
             console.log(res)
             this.categoryList = res
         },
         async loadGame() {
             const res = await this.$api.home.getGameList(this.gameParam);
             console.log('loadGame', res)
-            this.gameList = res.data
+            this.gameList = this.gameList.concat(res.data)
+            this.status = res.data.length < this.gameParam.limit ? 'nomore' : 'loading'
         },
         async getNewGames() {
             const res = await this.$api.home.getNewGame(this.hotParam);
-            this.gameList = res.data
+            this.gameList = this.gameList.concat(res.data)
+            this.status = res.data.length < this.hotParam.limit ? 'nomore' : 'loading'
+            
         },
         toGame(item) {
-            uni.redirectTo({
-                url: `/pages/gameDetail/index?id=${item.id}`
-            })
+            if(this.isHot){
+                uni.redirectTo({
+                    url: `/pages/gameDetail/index?id=${item.gid}`
+                })
+            }else{
+                uni.redirectTo({
+                    url: `/pages/gameDetail/index?id=${item.id}`
+                })
+            }
+           
         },
         openLeftMenu() {
             this.isLeftMenu = true
@@ -129,6 +145,19 @@ export default {
         onCategoryClick(item) {
             this.gameParam.tid = item.id
             this.loadGame()
+        },
+        loadMore() {
+            if (this.isHot) {
+                this.hotParam.page++
+                if (this.status !== 'nomore') {
+                    this.getNewGames()
+                }
+            } else {
+                this.gameParam.page++
+                if (this.status !== 'nomore') {
+                    this.loadGame()
+                }
+            }
         }
     }
 }
@@ -142,7 +171,7 @@ export default {
     position: absolute;
     width: 100%;
     box-sizing: border-box;
-    background-color: var(--home--bg);
+    background-color: #FFFFFF;
 
     .group-list {
         flex: 1;
@@ -162,12 +191,11 @@ export default {
             }
 
             .game-list {
-                display: grid;
+                display: flex;
+                flex-wrap: wrap;
                 gap: 0.84rem;
-                grid-template-columns: repeat(3, 1fr);
-
                 .game-item {
-                    width: 100%;
+                    width: calc(33.3% - 0.84rem);
                     // height: 6.56rem;
                     aspect-ratio: 210/210;
                     border-radius: 0.25rem;
