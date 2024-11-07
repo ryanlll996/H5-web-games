@@ -1,6 +1,6 @@
 <template>
     <view class="webview" :class="[currentTheme + '-theme']">
-        <web-view :src="payPath"></web-view>
+        <web-view :src="gamePath"></web-view>
     </view>
 </template>
 
@@ -18,7 +18,7 @@ export default {
         this.url = encodeURI(options.url)
     },
     computed: {
-        ...mapGetters(['payPath', 'currentTheme'])
+        ...mapGetters(['gamePath', 'currentTheme'])
     },
     methods: {
         backTo() {

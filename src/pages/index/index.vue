@@ -62,16 +62,10 @@ export default {
       this.gameCateList = res
     },
     async getTas() {
-      const res = await this.$api.home.getHotTag()
+      const res = await this.$api.home.getTas({wid: this.channelInfo.wid})
       console.log(res)
       this.gameTypes = res
       this.$store.dispatch('setCates', res);
-      // res.forEach((element, index) => {
-      //   this.gameParam.limit = 4
-      //   this.gameParam.tid = element.id
-      //   this.loadGame(res, index)
-      //   this.gameParam.tid = ''
-      // });
     },
 
     async loadGame(tags, index) {

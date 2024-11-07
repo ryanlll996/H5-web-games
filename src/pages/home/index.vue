@@ -87,7 +87,7 @@
 
             </view>
             <view class="game-types-item-bottom">
-                <view class="game-item" v-for="(game) in newGames" :key="game.id" @click="toGame(game)">
+                <view class="game-item" v-for="(game) in newGames" :key="game.id" @click="toHotGame(game)">
                     <image :src="game.img" mode="widthFix"></image>
                     <view class="game-name">{{ game.name }}</view>
                 </view>
@@ -135,6 +135,11 @@ export default {
     methods: {
         toGame(game) {
             console.log(game)
+            uni.redirectTo({
+                url: `/pages/gameDetail/index?id=${game.id}`
+            })
+        },
+        toHotGame(game){
             uni.redirectTo({
                 url: `/pages/gameDetail/index?id=${game.gid}`
             })
@@ -202,7 +207,7 @@ export default {
         .game-types-item-bottom {
             display: flex;
             flex-wrap: wrap;
-            justify-content: space-between;
+            justify-content: flex-start;
             gap: 0.72rem;
 
             .game-item {

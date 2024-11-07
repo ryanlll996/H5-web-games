@@ -2,9 +2,9 @@
     <view class="group-container" :class="[currentTheme + '-theme']">
         <c-navbar @openLeftMenu="openLeftMenu"></c-navbar>
         <scroll-view class="group-list" scroll-y>
-            <view class="ad" v-if="!isSearch">
+            <!-- <view class="ad" v-if="!isSearch">
 
-            </view>
+            </view> -->
             <view class="games">
                 <view class="page-title" v-if="isSearch">
                     Search Results for: ’{{ gameParam.keyword }}’
@@ -51,7 +51,7 @@
                             <image :src="item.img"></image>
                             <view class="desc">
                                 <view class="name">{{ item.name }}</view>
-                                <view class="text" v-html="item.pot_desc"></view>
+                                <view class="text" v-html="item.en_desc"></view>
                             </view>
                         </view>
                     </view>
@@ -263,7 +263,6 @@ export default {
 
                         .desc {
                             padding: 0.625rem 0.9375rem;
-
                             .name {
                                 font-family: Inter;
                                 font-size: 0.78rem;
@@ -312,7 +311,7 @@ export default {
 
                         .desc {
                             padding: 0.625rem 0.9375rem;
-
+                            width: calc(100% - 6.19rem);
                             .name {
                                 font-family: Inter;
                                 font-size: 0.78rem;
@@ -327,6 +326,11 @@ export default {
                                 font-size: 0.78rem;
                                 font-weight: 400;
                                 text-align: left;
+                                text-overflow: ellipsis;
+                                overflow: hidden;
+                                display: -webkit-box;
+                                -webkit-line-clamp: 2;
+                                -webkit-box-orient: vertical;
                             }
                         }
                     }
