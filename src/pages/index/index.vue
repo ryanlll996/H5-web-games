@@ -7,7 +7,7 @@
       <Home v-if="currentTab === 0" :gameTypes="gameTypes" :hotGames="hotGames" :newGames="newGames" ref="home"></Home>
     </scroll-view>
 
-    <leftMenu :isLeftMenu="isLeftMenu" :gameTypes="gameTypes" @close="isLeftMenu = false"
+    <leftMenu :isLeftMenu="isLeftMenu" :gameTypes="tags" @close="isLeftMenu = false"
       @onHotGamesClick="onHotGamesClick" @onGamesClick="onGamesClick">
     </leftMenu>
     <Footer/>
@@ -41,6 +41,7 @@ export default {
         orderBy: '',
         tid: ''
       },
+      tags: [],
     }
   },
   components: {
@@ -67,8 +68,9 @@ export default {
       this.gameTypes = res
     },
     async getTas(){
-      const res = await this.$api.home.getHotTag()
+      const res = await this.$api.home.getTags({wid: this.channelInfo.wid})
       console.log(res)
+      this.tags = res
       // res.forEach((element, index) => {
       //   this.gameParam.limit = 4
       //   this.gameParam.tid = element.id

@@ -77,7 +77,7 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(["currentTheme"])
+        ...mapGetters(["currentTheme", "channelInfo"])
     },
     components: {
         leftMenu,
@@ -93,7 +93,7 @@ export default {
             this.isLeftMenu = true
         },
         async getTags() {
-            const res = await this.$api.home.getTags()
+            const res = await this.$api.home.getTags({wid: this.channelInfo.wid})
             console.log(res)
             this.categoryList = res
         },

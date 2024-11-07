@@ -106,7 +106,7 @@ export default {
     },
     methods: {
         async getTags() {
-            const res = await this.$api.home.getTags()
+            const res = await this.$api.home.getTags({ wid: this.channelInfo.wid })
             console.log(res)
             this.categoryList = res
         },
