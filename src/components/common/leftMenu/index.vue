@@ -2,14 +2,15 @@
     <up-popup :show="isLeftMenu" mode="left" :safeAreaInsetTop="true" :closeOnClickOverlay="true">
         <view class="menus">
             <view class="search">
-                <up-input class="search-input" placeholder="请输入内容" border="surround" v-model="searchValue" @change="onTextChange">
+                <up-input class="search-input" placeholder="请输入内容" border="surround" v-model="searchValue"
+                    @change="onTextChange">
                     <template #suffix>
                         <svg @click="onSearchClick" width="1.5625rem" height="1.72rem" viewBox="0 0 50 55" fill="none"
                             xmlns="http://www.w3.org/2000/svg">
                             <g clip-path="url(#clip0_37_79)">
                                 <path
                                     d="M49.8758 48.017L41.4108 38.6072C46.9452 29.1525 45.9267 16.4607 38.3419 8.20416C29.5678 -1.3441 15.3495 -1.3441 6.57642 8.20416C-2.19214 17.7503 -2.19214 33.2312 6.57642 42.7744C14.3849 51.2725 26.5056 52.1991 35.2631 45.5683L43.6037 54.8428L49.8758 48.017ZM10.863 38.1143C4.45688 31.1431 4.45688 19.8417 10.863 12.8691C17.267 5.89868 27.6535 5.89868 34.0546 12.8691C40.4613 19.8417 40.4613 31.1431 34.0546 38.1143C27.6525 45.0847 17.267 45.0847 10.863 38.1143Z"
-                                    fill="#B25300" />
+                                    fill="#576681" />
                             </g>
                             <defs>
                                 <clipPath id="clip0_37_79">
@@ -22,12 +23,17 @@
                 </up-input>
             </view>
 
-           
-            <view class="menus-item">
+
+            <!-- <view class="menus-item">
                 <svg width="0.28rem" height="0.84rem" viewBox="0 0 9 27" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <rect width="9" height="27" fill="#FF9E0D" />
                 </svg>
                 Categories
+            </view> -->
+            <view class="game-types">
+                <view class="game-types-item dan" @click="onNewGamesClick">
+                    New Games
+                </view>
             </view>
             <view class="game-types">
                 <view class="game-types-item" @click="onHotGamesClick">
@@ -35,8 +41,8 @@
                 </view>
             </view>
             <view class="game-types">
-                <view class="game-types-item" v-if="gameTypes.length > 0" v-for="(item, index) in gameTypes"
-                    :key="index" @click="onGamesClick(item)">
+                <view class="game-types-item" :class="index % 2 == 0 ? 'dan' : ''" v-if="gameTypes.length > 0"
+                    v-for="(item, index) in gameTypes" :key="index" @click="onGamesClick(item)">
                     {{ item.name }}
                 </view>
             </view>
@@ -72,10 +78,14 @@ export default {
         close() {
             this.$emit('close')
         },
-        onHotGamesClick() {
-            // this.$emit('onHotGamesClick')
+        onNewGamesClick() {
             uni.redirectTo({
-                url: `/pages/group/index?isHot=0&&name=热门游戏`
+                url: `/pages/group/index?isNew=0&&name=New Games`
+            })
+        },
+        onHotGamesClick() {
+            uni.redirectTo({
+                url: `/pages/group/index?isHot=0&&name=Hot Games`
             })
         },
 
@@ -123,10 +133,12 @@ export default {
     .search {
         .search-input {
             border: none;
-            background-color: #FFEDDE;
+            background-color: #FFFFFF;
             border-right: 0.25rem;
-            width: 10.59rem;
-            height: 2.44rem;
+            width: 12rem;
+            height: 2.25rem;
+            border: 1px solid #767070 !important;
+            margin-bottom: 0.8125rem;
         }
     }
 
@@ -140,21 +152,21 @@ export default {
     }
 
     .game-types {
-        margin-top: 0.8125rem;
 
         .game-types-item {
             font-family: Inter;
             font-size: 0.9375rem;
-            font-weight: 700;
+            font-weight: 400;
             text-align: center;
-            color: #FF9E0D;
-            margin-top: 0.8125rem;
+            color: #183E7C;
             padding: 0.53rem 0;
             display: flex;
             align-items: center;
             justify-content: center;
-            background-color: #FFEDDE;
-            border-radius: 0.25rem;
+            background-color: #FFFFFF;
+            &.dan {
+                background-color: #D3DEF0;
+            }
         }
     }
 }

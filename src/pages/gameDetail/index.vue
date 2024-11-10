@@ -1,6 +1,6 @@
 <template>
     <view class="game-detail" :class="[currentTheme + '-theme']">
-        <c-navbar @toHome="toHome" @toBalance="toDeposit" @openLeftMenu="openLeftMenu"></c-navbar>
+        <c-navbar @openLeftMenu="openLeftMenu"></c-navbar>
         <scroll-view scroll-y class="game-detail__wrapper">
             <view class="game-detail__wrapper__content">
                 <!-- <view class="ad">
@@ -13,17 +13,7 @@
                         </view>
                         <view class="game-name">
                             <view class="name">{{ gameDetail.name }}</view>
-                            <view class="rate">
-                                <svg width="1.56rem" height="1.5rem" viewBox="0 0 50 48" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path
-                                        d="M26.1008 0.681134L33.1553 15.0744L48.9521 17.3861C49.952 17.5329 50.3556 18.7621 49.6309 19.4685L38.1915 30.6877L40.8885 46.5212C41.0628 47.5211 40.0079 48.2825 39.1089 47.8055L24.9908 40.3383L10.8728 47.8055C9.97377 48.2825 8.92799 47.5211 9.09311 46.5212L11.7901 30.6877L0.36909 19.4593C-0.355619 18.753 0.0480164 17.5237 1.04793 17.3769L16.8447 15.0652L23.9083 0.681134C24.3579 -0.227045 25.6605 -0.227045 26.1008 0.681134Z"
-                                        fill="#F8AE06" />
-                                </svg>
-                                <view class="num">
-                                    {{ gameDetail.rate }}
-                                </view>
-                            </view>
+
                         </view>
                     </view>
                     <view class="play-btn">
@@ -46,7 +36,22 @@
                         <view class="related-list">
                             <view class="game-item" v-for="(item, index) in relatedList" :key="index"
                                 @click="toGame(item)">
-                                <image :src="item.img"></image>
+                                <view class="img">
+                                    <image :src="item.img">
+
+                                    </image>
+                                    <view class="rate">
+                                        <svg width="0.625rem" height="0.625rem" viewBox="0 0 20 20" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M10.4403 0.272454L13.2621 6.02976L19.5808 6.95445C19.9808 7.01316 20.1422 7.50486 19.8524 7.7874L15.2766 12.2751L16.3554 18.6085C16.4251 19.0085 16.0032 19.313 15.6436 19.1222L9.99633 16.1353L4.34911 19.1222C3.98951 19.313 3.57119 19.0085 3.63724 18.6085L4.71605 12.2751L0.147636 7.78373C-0.142247 7.50119 0.0192066 7.00949 0.419172 6.95078L6.7379 6.02609L9.56334 0.272454C9.74314 -0.0908179 10.2642 -0.0908179 10.4403 0.272454Z"
+                                                fill="#F8AE06" />
+                                        </svg>
+                                        {{ item.rate }}
+                                    </view>
+                                </view>
+
+                                <view class="name">{{ item.name }}</view>
                             </view>
                         </view>
                     </view>
@@ -78,7 +83,7 @@ export default {
                 orderBy: '',
                 tid: ''
             },
-            categoryList:[],
+            categoryList: [],
             relatedList: []
         }
     },
@@ -100,7 +105,8 @@ export default {
         },
         async getTags() {
             const res = await this.$api.home.getTags({
-                wid: this.channelInfo.wid})
+                wid: this.channelInfo.wid
+            })
             console.log(res)
             this.categoryList = res
         },
@@ -146,11 +152,10 @@ export default {
 
                 .game-img {
                     display: flex;
-                    align-items: center;
 
                     .img {
-                        width: 4.69rem;
-                        height: 4.69rem;
+                        width: 4.84rem;
+                        height: 4.84rem;
                         border-radius: 0.25rem;
 
                         image {
@@ -162,6 +167,7 @@ export default {
 
                     .game-name {
                         margin-left: 0.9375rem;
+                        margin-top: 0.9375rem;
 
                         .name {
                             font-family: Inter;
@@ -180,7 +186,8 @@ export default {
                             color: #F8AE06;
                             display: flex;
                             align-items: center;
-                            .num{
+
+                            .num {
                                 margin-left: 0.9375rem;
                             }
                         }
@@ -189,11 +196,12 @@ export default {
 
                 .play-btn {
                     margin-top: 1.28rem;
+                    padding: 0 0.25rem;
 
                     .btn {
-                        background: linear-gradient(180deg, #FE558F 0%, #FF9818 100%);
-                        height: 2.84rem;
-                        border-radius: 0.25rem;
+                        box-shadow: 0px 4px 4px 0px #00000040;
+                        height: 3.125rem;
+                        border-radius: 0.5rem;
                         display: flex;
                         align-items: center;
                         justify-content: center;
@@ -202,6 +210,7 @@ export default {
                         font-weight: 700;
                         text-align: left;
                         color: #fff;
+                        background-color: #496393;
                     }
                 }
 
@@ -213,7 +222,7 @@ export default {
                         font-size: 1.25rem;
                         font-weight: 700;
                         text-align: left;
-                        color: #271A19;
+                        color: #3F3B45;
                     }
 
                     .desc-content {
@@ -222,7 +231,7 @@ export default {
                         font-size: 0.75rem;
                         font-weight: 400;
                         text-align: left;
-                        color: #000000;
+                        color: #3F3B45;
                     }
                 }
 
@@ -234,24 +243,64 @@ export default {
                         font-size: 1.25rem;
                         font-weight: 700;
                         text-align: left;
-                        color: #DD8400;
+                        color: #3F3B45;
+                        margin-bottom: 1.0625rem;
                     }
 
                     .related-list {
-                        display: grid;
-                        gap: 0.84rem;
-                        grid-template-columns: repeat(3, 1fr);
+
 
                         .game-item {
                             width: 100%;
-                            // height: 6.56rem;
-                            aspect-ratio: 210/210;
-                            border-radius: 0.25rem;
+                            display: flex;
+                            margin-bottom: 1.0625rem;
 
-                            image {
-                                width: 100%;
-                                height: 100%;
-                                border-radius: 0.25rem;
+                            .img {
+                                width: 3.75rem;
+                                height: 3.75rem;
+                                border-radius: 0.5rem;
+                                position: relative;
+                                margin-right: 0.5rem;
+
+                                image {
+
+                                    width: 100%;
+                                    height: 100%;
+                                    border-radius: 0.5rem;
+
+
+                                }
+
+                                .rate {
+                                    position: absolute;
+                                    top: 0;
+                                    left: 0;
+                                    z-index: 1;
+                                    background-color: #fff;
+                                    box-shadow: 0px 4px 4px 0px #00000040;
+                                    font-family: Inter;
+                                    font-size: 0.6875rem;
+                                    font-weight: 400;
+                                    color: #0D3C53;
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+                                    border-radius: 0.5rem 0 0.25rem 0;
+                                    padding:0.16rem 0.22rem;
+                                    svg{
+                                        margin-right: 0.25rem;
+                                    }
+                                }
+                            }
+
+
+                            .name {
+                                font-family: Inter;
+                                font-size: 0.9375rem;
+                                font-weight: 700;
+                                text-align: left;
+                                color: #496393;
+                                margin-top: 0.25rem;
                             }
                         }
                     }

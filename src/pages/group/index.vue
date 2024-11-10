@@ -1,13 +1,13 @@
 <template>
     <view class="group-container" :class="[currentTheme + '-theme']">
-        <c-navbar @toHome="toHome" @toBalance="toDeposit" @openLeftMenu="openLeftMenu"></c-navbar>
+        <c-navbar @openLeftMenu="openLeftMenu"></c-navbar>
         <scroll-view class="group-list" scroll-y @scrolltolower="loadMore">
             <view class="games">
                 <view class="page-title" v-if="isSearch">
-                    Search Results for: ’{{gameParam.keyword}}’
+                    Search Results for: ’{{ gameParam.keyword }}’
                 </view>
                 <view class="page-title" v-else>
-                    {{categoryName}}
+                    {{ categoryName }}
                 </view>
                 <view class="game-list">
                     <view class="game-item" v-for="(item, index) in gameList" :key="index" @click="toGame(item)">
@@ -18,11 +18,11 @@
 
             <view class="category">
                 <view class="category-title">
-                    Categories
+                    Tags
                 </view>
                 <view class="category-list">
                     <view class="category-item" v-for="(item, index) in categoryList" :key="index"
-                        @click="onCategoryClick(item)">
+                        @click="toCategory(item)">
                         {{ item.name }}
                     </view>
                 </view>
@@ -85,23 +85,31 @@ export default {
         this.categoryName = options.name
         this.gameParam.tid = options.id
         this.getTags()
-        if(options.search == 0){
+        if (options.search == 0) {
             this.isSearch = true
             this.isHot = false
             this.gameParam.keyword = options.searchValue
             this.loadGame()
         }
-        if(options.isHot == 1){
+        if (options.isNew == 0) {
+            this.isSearch = false
+            this.isHot = true
+            this.hotParam.wid = options.id
+            this.hotParam.orderBy = 'id desc'
+            this.getNewGames()
+        }
+        if (options.isHot == 1) {
             this.isSearch = false
             this.isHot = false
-            this.hotParam.wid = options.id
+            
             this.loadGame()
         }
 
-        if(options.isHot == 0){
+        if (options.isHot == 0) {
             this.isSearch = false
             this.isHot = true
             this.hotParam.wid = this.channelInfo.wid
+            this.hotParam.orderBy = 'hot_num desc'
             this.getNewGames()
         }
 
@@ -111,7 +119,8 @@ export default {
     methods: {
         async getTags() {
             const res = await this.$api.home.getTags({
-                wid: this.channelInfo.wid})
+                wid: this.channelInfo.wid
+            })
             console.log(res)
             this.categoryList = res
         },
@@ -125,19 +134,19 @@ export default {
             const res = await this.$api.home.getNewGame(this.hotParam);
             this.gameList = this.gameList.concat(res.data)
             this.status = res.data.length < this.hotParam.limit ? 'nomore' : 'loading'
-            
+
         },
         toGame(item) {
-            if(this.isHot){
+            if (this.isHot) {
                 uni.redirectTo({
                     url: `/pages/gameDetail/index?id=${item.gid}`
                 })
-            }else{
+            } else {
                 uni.redirectTo({
                     url: `/pages/gameDetail/index?id=${item.id}`
                 })
             }
-           
+
         },
         openLeftMenu() {
             this.isLeftMenu = true
@@ -158,6 +167,11 @@ export default {
                     this.loadGame()
                 }
             }
+        },
+        toCategory(item) {
+            uni.redirectTo({
+                url: `/pages/group/index?id=${item.id}&&name=${item.name}&&isHot=1`
+            })
         }
     }
 }
@@ -180,20 +194,24 @@ export default {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+
         .games {
             flex: 1;
+
             .page-title {
                 font-family: Inter;
-                font-size: 1.25rem;
+                font-size: 0.9375rem;
                 font-weight: 700;
                 text-align: left;
-                color: #FF9E0D;
+                color: #3F3B45;
+                margin-bottom: 0.5rem;
             }
 
             .game-list {
                 display: flex;
                 flex-wrap: wrap;
                 gap: 0.84rem;
+
                 .game-item {
                     width: calc(33.3% - 0.84rem);
                     // height: 6.56rem;
@@ -212,30 +230,33 @@ export default {
         .category {
             .category-title {
                 font-family: Inter;
-                font-size: 1.25rem;
+                font-size: 0.9375rem;
                 font-weight: 700;
                 text-align: left;
-                color: #DD8400;
+                color: #3F3B45;
+                margin-bottom: 0.84rem;
             }
+
             .category-list {
-                display: grid;
-                gap: 0.84rem;
-                grid-template-columns: repeat(3, 1fr);
-                margin-top: 0.84rem;
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0.59rem;
+
                 .category-item {
-                    width: 100%;
-                    // height: 6.56rem;
-                    aspect-ratio: 215/70;
+                    background-color: #E5F1FC;
                     border-radius: 0.25rem;
-                    background-color: #FFEDDE;
+                    font-family: Inter;
+                    font-size: 0.8125rem;
+                    font-weight: 400;
+                    color: #1C85E6;
+                    width: calc(25% - 0.59rem);
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    font-family: Inter;
-                    font-size: 0.9375rem;
-                    font-weight: 700;
-                    text-align: center;
-                    color: #FF9E0D;
+                    padding: 0.375rem;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    white-space: nowrap;
                 }
             }
         }

@@ -1,10 +1,11 @@
 <template>
     <view class="footer">
+       
         <view class="footer-line">
-            Privacy Policy | Terms of Service
+            © 2024 GameCryp All rights reserved.
         </view>
         <view class="footer-line last">
-            © 2024 GameCryp All rights reserved.
+            <text>Home</text> <text>Privacy Policy</text><text>Terms of Service</text>
         </view>
     </view>
 </template>
@@ -16,13 +17,16 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: #B25300;
+    background-color: #6C7FA1;
     .footer-line {
         font-family: Inter;
         font-size: 0.625rem;
         font-weight: 400;
         text-align: left;
         color: #fff;
+        text{
+            margin-right: 0.5rem;
+        }
         &.last{
             margin-top: 0.625rem;
         }

@@ -3,13 +3,37 @@
         <!-- <view class="ad">
 
         </view> -->
-       <view class="game-types-item" v-for="(item, index) in gameTypes" :key="index">
+        <view class="game-types-item">
+            <view class="game-types-item-top">
+                <view class="title">New Games</view>
+                <view class="desc" @click="toCategory(item)">
+                    Show more
+                </view>
+            </view>
+            <view class="game-types-item-bottom">
+                <view class="game-item" v-for="(game) in newGames" :key="game.id" @click="toGame(game)">
+                    <image :src="game.img"></image>
+                </view>
+            </view>
+        </view>
+        <view class="game-types-item">
+            <view class="game-types-item-top">
+                <view class="title">Hot Games</view>
+                <view class="desc" @click="toCategory(item)">
+                    Show more
+                </view>
+            </view>
+            <view class="game-types-item-bottom">
+                <view class="game-item" v-for="(game) in hotGames" :key="game.id" @click="toGame(game)">
+                    <image :src="game.img"></image>
+                </view>
+            </view>
+        </view>
+        <view class="game-types-item" v-for="(item, index) in gameTypes" :key="index">
             <view class="game-types-item-top">
                 <view class="title">{{ item.name }}</view>
                 <view class="desc" @click="toCategory(item)">
-                    <svg width="0.875rem" height="1.5rem" viewBox="0 0 28 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M27.2344 23.8923C27.2344 24.7486 26.9074 25.6049 26.2552 26.2577L5.7112 46.8011C4.40432 48.108 2.28592 48.108 0.97968 46.8011C-0.32656 45.4949 -0.32656 43.3765 0.97968 42.0696L19.1576 23.8923L0.980321 5.71501C-0.325919 4.40813 -0.325919 2.28973 0.980321 0.98349C2.28656 -0.323391 4.40496 -0.323391 5.71184 0.98349L26.2558 21.5268C26.908 22.1796 27.2344 23.036 27.2344 23.8923Z" fill="#DD8400"/>
-                    </svg>
+                    Show more
                 </view>
             </view>
             <view class="game-types-item-bottom">
@@ -17,7 +41,16 @@
                     <image :src="game.img"></image>
                 </view>
             </view>
-       </view>
+        </view>
+        <view class="tags">
+            <view class="tag-title">Tags</view>
+            <view class="list">
+                <view class="tag" v-for="(item, index) in cates" :key="index" @click="toCategory(item)">
+                    {{ item.name }}
+                </view>
+            </view>
+
+        </view>
     </view>
 </template>
 
@@ -30,28 +63,39 @@ export default {
             default: () => {
                 return []
             }
+        },
+        hotGames: {
+            type: Array,
+            default: () => {
+                return []
+            }
+        },
+        newGames: {
+            type: Array,
+            default: () => {
+                return []
+            }
         }
     },
-    components: {  },
+    components: {},
     data() {
         return {
-            
-        
+
+
         }
     },
     mounted() { },
     computed: {
-
-        ...mapGetters(['isLogin', 'currentTheme'])
+        ...mapGetters(['isLogin', 'currentTheme', 'cates'])
     },
     methods: {
-        toGame(game){
+        toGame(game) {
             console.log(game)
             uni.redirectTo({
                 url: `/pages/gameDetail/index?id=${game.id}`
             })
         },
-        toCategory(item){
+        toCategory(item) {
             uni.redirectTo({
                 url: `/pages/group/index?id=${item.id}&&name=${item.name}&&isHot=1`
             })
@@ -67,42 +111,96 @@ export default {
 
 .game-types {
     width: 100%;
-    .ad{
+
+    .ad {
         width: 100%;
         height: 16rem;
         background-color: antiquewhite;
     }
-    .game-types-item{
+
+    .game-types-item {
         padding: 1.34rem 0.625rem;
+
         .game-types-item-top {
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            .title{
+            justify-content: flex-start;
+
+            .title {
                 font-family: Inter;
-                font-size: 1.25rem;
+                font-size: 0.9375rem;
                 font-weight: 700;
                 text-align: left;
-                color: #DD8400;
+                color: #3F3B45;
                 padding: 0.5rem 0;
             }
+
+            .desc {
+                font-family: Inter;
+                font-size: 0.9375rem;
+                font-weight: 700;
+                text-align: left;
+                color: #0076e3;
+                padding: 0.5rem 0;
+                margin-left: 0.5rem;
+            }
         }
-        .game-types-item-bottom{
+
+        .game-types-item-bottom {
             display: flex;
             align-items: center;
             justify-content: flex-start;
             gap: 0.84rem;
-            .game-item{
+
+            .game-item {
                 width: calc(25% - 0.84rem);
                 aspect-ratio: 1/1;
-                border-radius: 0.25rem;
-                image{
+                border-radius: 0.5rem;
+
+                image {
                     width: 100%;
                     height: 100%;
-                    border-radius: 0.25rem;
+                    border-radius: 0.5rem;
                 }
             }
         }
+    }
+
+    .tags {
+        padding: 1.34rem 0.625rem;
+
+        .tag-title {
+            font-family: Inter;
+            font-size: 0.8125rem;
+            font-weight: 700;
+            text-align: left;
+            color: #3F3B45;
+            margin-bottom: 0.84rem;
+        }
+
+        .list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.59rem;
+
+            .tag {
+                background-color: #E5F1FC;
+                border-radius: 0.25rem;
+                font-family: Inter;
+                font-size: 0.8125rem;
+                font-weight: 400;
+                color: #1C85E6;
+                width: calc(25% - 0.59rem);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 0.375rem;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                white-space: nowrap;
+            }
+        }
+
     }
 }
 </style>
