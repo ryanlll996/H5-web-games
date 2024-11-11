@@ -57,6 +57,7 @@
                     </view>
                 </view>
             </view>
+            <Policy />
         </scroll-view>
         <Footer />
         <leftMenu :isLeftMenu="isLeftMenu" :gameTypes="categoryList" @close="isLeftMenu = false"
@@ -69,6 +70,8 @@
 import leftMenu from '../../components/common/leftMenu/index.vue'
 import Footer from '../../components/common/footer.vue'
 import { mapGetters } from 'vuex'
+import Policy from '../../components/common/policy/index.vue'
+
 export default {
     name: 'GameDetail',
     data() {
@@ -82,7 +85,7 @@ export default {
                 keyword: '',
                 orderBy: '',
                 tid: ''
-            },
+            },     
             categoryList: [],
             relatedList: []
         }
@@ -92,7 +95,8 @@ export default {
     },
     components: {
         leftMenu,
-        Footer
+        Footer,
+        Policy
     },
     onLoad(options) {
         this.id = options.id

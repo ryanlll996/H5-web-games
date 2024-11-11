@@ -5,10 +5,21 @@
             © 2024 GameCryp All rights reserved.
         </view>
         <view class="footer-line last">
-            <text>Home</text> <text>Privacy Policy</text><text>Terms of Service</text>
+            <text>Home</text> <text @click="toPolicy">Privacy Policy</text><text>Terms of Service</text>
         </view>
     </view>
 </template>
+<script>
+export default {
+    methods: {
+        toPolicy() {
+            uni.navigateTo({
+                url: '/pages/protocol/index'
+            })
+        }
+    }
+}
+</script>
 <style lang="scss" scoped>
 .footer {
     height: 5.875rem;

@@ -33,6 +33,12 @@
 			"style": {
 				"navigationBarTitleText": "H5 games"
 			}
+		},
+		{
+			"path": "pages/protocol/index",
+			"style": {
+				"navigationBarTitleText": "H5 games"
+			}
 		}
 	],
 	"globalStyle": {

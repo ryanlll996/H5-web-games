@@ -40,7 +40,7 @@ export default {
   components: {
     Home,
     leftMenu,
-    Footer
+    Footer,
   },
   computed: {
     ...mapGetters(['isLogin', 'currentTab', 'currentTheme', 'channelInfo', 'cates'])

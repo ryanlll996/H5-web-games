@@ -28,6 +28,7 @@
                 </view>
 
             </view>
+            <Policy />
         </scroll-view>
 
         <leftMenu :isLeftMenu="isLeftMenu" :gameTypes="categoryList" @close="isLeftMenu = false">
@@ -39,7 +40,7 @@
 import { mapGetters } from 'vuex'
 import Footer from '../../components/common/footer.vue'
 import leftMenu from '../../components/common/leftMenu/index.vue'
-
+import Policy from '../../components/common/policy/index.vue'
 export default {
     name: 'Group',
     computed: {
@@ -47,7 +48,8 @@ export default {
     },
     components: {
         Footer,
-        leftMenu
+        leftMenu,
+        Policy
     },
     props: {
         chargeObj: {},
@@ -94,7 +96,7 @@ export default {
         if (options.isNew == 0) {
             this.isSearch = false
             this.isHot = true
-            this.hotParam.wid = options.id
+            this.hotParam.wid = this.channelInfo.wid
             this.hotParam.orderBy = 'id desc'
             this.getNewGames()
         }

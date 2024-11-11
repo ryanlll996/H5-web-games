@@ -6,7 +6,7 @@
         <view class="game-types-item">
             <view class="game-types-item-top">
                 <view class="title">New Games</view>
-                <view class="desc" @click="toCategory(item)">
+                <view class="desc" @click="onNewGamesClick">
                     Show more
                 </view>
             </view>
@@ -19,7 +19,7 @@
         <view class="game-types-item">
             <view class="game-types-item-top">
                 <view class="title">Hot Games</view>
-                <view class="desc" @click="toCategory(item)">
+                <view class="desc" @click="onHotGamesClick">
                     Show more
                 </view>
             </view>
@@ -51,11 +51,14 @@
             </view>
 
         </view>
+        <Policy/>
     </view>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
+import Policy from '../../components/common/policy/index.vue'
+
 export default {
     props: {
         gameTypes: {
@@ -77,7 +80,9 @@ export default {
             }
         }
     },
-    components: {},
+    components: {
+        Policy
+    },
     data() {
         return {
 
@@ -89,6 +94,16 @@ export default {
         ...mapGetters(['isLogin', 'currentTheme', 'cates'])
     },
     methods: {
+        onNewGamesClick() {
+            uni.redirectTo({
+                url: `/pages/group/index?isNew=0&&name=New Games`
+            })
+        },
+        onHotGamesClick() {
+            uni.redirectTo({
+                url: `/pages/group/index?isHot=0&&name=Hot Games`
+            })
+        },
         toGame(game) {
             console.log(game)
             uni.redirectTo({
