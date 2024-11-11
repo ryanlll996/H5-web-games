@@ -2,8 +2,7 @@
   <view class="index-wapper" :class="[currentTheme + '-theme']">
     <c-navbar @toHome="toHome"
       @openLeftMenu="openLeftMenu"></c-navbar>
-    <scroll-view class="scroll-view" scroll-y scroll-with-animation="true" @scrolltolower="loadChargeListMore"
-      @scroll="onScroll" :scroll-into-view="scrollIntoViewId">
+    <scroll-view class="scroll-view" scroll-y scroll-with-animation="true">
       <Home v-if="currentTab === 0" :gameTypes="gameTypes" :hotGames="hotGames" :newGames="newGames" ref="home"></Home>
     </scroll-view>
 
@@ -24,7 +23,6 @@ export default {
     return {
       title: 'Hello',
       isLeftMenu: false,
-      scrollIntoViewId: '',
       gameTypes: [],
       tags: [],
       hotGames: [],
@@ -119,9 +117,7 @@ export default {
     openLeftMenu() {
       this.isLeftMenu = true
     },
-    onScroll(e) {
-      console.log(e.detail.scrollHeight)
-    },
+   
     toRank() {
       if (!this.isLogin) {
         return
@@ -142,23 +138,6 @@ export default {
       }
 
       return str;
-    },
-    scrollTo(item) {
-      console.log(item)
-      if (item.id === 0) {
-        this.scrollIntoViewId = 'home__list';
-      } else if (item.id === 1) {
-        this.scrollIntoViewId = 'PG';
-      } else if (item.id === 9) {
-        this.scrollIntoViewId = 'PP';
-      } else if (item.id === 8) {
-        this.scrollIntoViewId = 'JILI';
-      }
-
-      // 延迟一定时间后清除scrollIntoViewId，以便在滚动完成后恢复默认状态
-      setTimeout(() => {
-        this.scrollIntoViewId = '';
-      }, 500); // 假设滚动时间为500ms
     }
   },
 }
