@@ -10,18 +10,26 @@
                             <view class="img">
                                 <image :src="gameDetail.img"></image>
                             </view>
-                            <view class="game-name">
-                                <view class="name">{{ gameDetail.name }}</view>
-                                <view class="rate">
-                                    <svg width="0.9375rem" height="0.91rem" viewBox="0 0 30 29" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M15.6605 0.40868L19.8932 9.04464L29.3712 10.4317C29.9712 10.5197 30.2134 11.2573 29.7785 11.6811L22.9149 18.4126L24.5331 27.9127C24.6377 28.5127 24.0047 28.9695 23.4653 28.6833L14.9945 24.203L6.52366 28.6833C5.98426 28.9695 5.35679 28.5127 5.45587 27.9127L7.07408 18.4126L0.221454 11.6756C-0.213371 11.2518 0.0288099 10.5142 0.628758 10.4262L10.1068 9.03913L14.345 0.40868C14.6147 -0.136227 15.3963 -0.136227 15.6605 0.40868Z"
-                                            fill="#212227" />
-                                    </svg>
-                                    {{ gameDetail.rate }}
+                            <view class="info">
+                                <view class="game-name">
+                                    <view class="name">{{ gameDetail.name }}</view>
+                                    <view class="rate">
+                                        <svg width="0.9375rem" height="0.91rem" viewBox="0 0 30 29" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M15.6605 0.40868L19.8932 9.04464L29.3712 10.4317C29.9712 10.5197 30.2134 11.2573 29.7785 11.6811L22.9149 18.4126L24.5331 27.9127C24.6377 28.5127 24.0047 28.9695 23.4653 28.6833L14.9945 24.203L6.52366 28.6833C5.98426 28.9695 5.35679 28.5127 5.45587 27.9127L7.07408 18.4126L0.221454 11.6756C-0.213371 11.2518 0.0288099 10.5142 0.628758 10.4262L10.1068 9.03913L14.345 0.40868C14.6147 -0.136227 15.3963 -0.136227 15.6605 0.40868Z"
+                                                fill="#FE5757" />
+                                        </svg>
+                                        <view class="num">{{ gameDetail.rate }}</view>
+                                    </view>
+                                </view>
+                                <view class="desc">
+
+                                    <view class="desc-content" v-html="gameDetail.desc">
+                                    </view>
                                 </view>
                             </view>
+
                         </view>
                         <view class="play-btn">
                             <view class="btn" @click="play(gameDetail)">
@@ -30,33 +38,15 @@
                         </view>
 
                     </view>
-                    <view class="desc" v-if="gameDetail.pot_desc">
 
-                        <view class="desc-content" v-html="gameDetail.pot_desc">
-
-                        </view>
-                    </view>
                     <view class="ad">
 
                     </view>
                     <view class="related">
-                        <view class="title">
-                            Related Games
-                        </view>
                         <view class="related-list">
                             <view class="game-item" v-for="(game) in relatedList" :key="game.id" @click="toGame(game)">
                                 <view class="img">
-                                    <image mode="heightFix" :src="game.img"></image>
-                                    <view class="info">
-                                        <view class="name">{{ game.name }}</view>
-                                        <view class="num" v-html="game.en_desc">
-                                        </view>
-                                    </view>
-                                </view>
-                                <view class="right">
-                                    <view class="play-btn">
-                                        Play
-                                    </view>
+                                    <image :src="game.img"></image>
                                 </view>
                             </view>
                         </view>
@@ -84,7 +74,7 @@ export default {
             gameDetail: {},
             gameParam: {
                 page: 1,
-                limit: 9,
+                limit: 8,
                 keyword: '',
                 orderBy: '',
                 tid: ''
@@ -144,7 +134,7 @@ export default {
     height: 100%;
     position: absolute;
     width: 100%;
-    background-color: #EBF4FF;
+    background-color: #EFECEC;
 
     &__wrapper {
         flex: 1;
@@ -158,21 +148,24 @@ export default {
             }
 
             .game-content {
-                padding: 0.69rem;
+                margin-top: 0.5rem;
+                padding: 1.25rem 1.156rem;
+                background-color: #fff;
 
                 .game-info {
-                    padding: 2.06rem 0 2.81rem 0;
                     background: #FFFFFF;
                     display: flex;
                     flex-direction: column;
-                    align-items: center;
-                    justify-content: center;
+                    border: 2px solid #FE5757;
+                    border-radius: 0.25rem;
+                    position: relative;
+                    height: 11.125rem;
+                    box-sizing: border-box;
+                    margin-bottom: 1.25rem;
 
                     .game-img {
                         display: flex;
-                        flex-direction: column;
-                        justify-content: center;
-                        align-items: center;
+                        padding: 0.69rem;
 
                         .img {
                             width: 6rem;
@@ -186,171 +179,128 @@ export default {
                             }
                         }
 
-                        .game-name {
-                            margin-top: 0.9375rem;
+                        .info {
+                            display: flex;
+                            flex-direction: column;
+                            width: calc(100% - 6rem);
 
-                            .name {
-                                font-family: Inter;
-                                font-size: 1.56rem;
-                                font-weight: 700;
-                                text-align: left;
-                                color: #3F3B45;
-                                margin-bottom: 0.53rem;
+                            .game-name {
+                                margin-top: 0.5rem;
+                                margin-left: 0.5rem;
+                                display: flex;
+                                justify-content: space-between;
+
+                                .name {
+                                    font-family: Inter;
+                                    font-size: 0.9375rem;
+                                    font-weight: 700;
+                                    text-align: left;
+                                    color: #212227;
+                                    margin-bottom: 0.53rem;
+                                }
+
+                                .rate {
+                                    font-family: Inter;
+                                    font-size: 0.9375rem;
+                                    font-weight: 400;
+                                    text-align: center;
+                                    color: #FE5757;
+                                    display: flex;
+                                    justify-content: center;
+
+                                    .num {
+                                        margin-left: 0.25rem;
+                                    }
+                                }
                             }
 
-                            .rate {
-                                font-family: Inter;
-                                font-size: 0.9375rem;
-                                font-weight: 400;
-                                text-align: center;
-                                color: #212227;
-                                display: flex;
-                                align-items: center;
-                                justify-content: center;
+                            .desc {
+                                border: 2px solid #FFFFFF;
+                                background-color: #fff;
+                                border-radius: 0.5rem;
+                                padding: 0.5625rem 0.625rem;
 
-                                .num {
-                                    margin-left: 0.9375rem;
+                                .title {
+                                    font-family: Inter;
+                                    font-size: 1.25rem;
+                                    font-weight: 700;
+                                    text-align: left;
+                                    color: #2565AF;
+                                }
+
+                                .line {
+                                    height: 1px;
+                                    width: 100%;
+                                    background-color: #2565AF;
+                                    margin-top: 0.625rem;
+                                    margin-bottom: 0.5rem;
+                                }
+
+                                .desc-content {
+                                    margin-top: 0.5rem;
+                                    font-family: Inter;
+                                    font-size: 0.75rem;
+                                    font-weight: 400;
+                                    text-align: left;
+                                    color: #3F3B45;
                                 }
                             }
                         }
+
                     }
 
                     .play-btn {
                         margin-top: 1.28rem;
+                        position: absolute;
+                        width: 100%;
+                        bottom: 0;
 
                         .btn {
-                            background: #FFFFFF;
-                            border-radius: 3.125rem;
+                            width: 100%;
+                            background: #FE5757;
+                            border-radius: 0.375rem;
                             display: flex;
                             align-items: center;
                             justify-content: center;
                             font-family: Inter;
-                            font-size: 1.25rem;
+                            font-size: 1.56rem;
                             font-weight: 700;
-                            color: #212227;
-                            border: 2px solid #212227;
-                            padding: 0.8125rem 6.375rem;
-                            box-shadow: 0px 4px 4px 0px #00000080;
+                            color: #FFFFFF;
+                            border: 2px solid #FE5757;
+                            height: 2.78rem;
                         }
                     }
-
-
                 }
 
-                .desc {
-                    margin-top: 1.28rem;
-                    border: 2px solid #FFFFFF;
-                    background-color: #fff;
-                    border-radius: 0.5rem;
-                    padding: 0.5625rem 0.625rem;
 
-                    .title {
-                        font-family: Inter;
-                        font-size: 1.25rem;
-                        font-weight: 700;
-                        text-align: left;
-                        color: #2565AF;
-                    }
-
-                    .line {
-                        height: 1px;
-                        width: 100%;
-                        background-color: #2565AF;
-                        margin-top: 0.625rem;
-                        margin-bottom: 0.5rem;
-                    }
-
-                    .desc-content {
-                        margin-top: 0.5rem;
-                        font-family: Inter;
-                        font-size: 0.75rem;
-                        font-weight: 400;
-                        text-align: left;
-                        color: #3F3B45;
-                    }
-                }
 
                 .related {
                     margin-top: 1.28rem;
 
-                    .title {
-                        font-family: Inter;
-                        font-size: 1.25rem;
-                        font-weight: 700;
-                        text-align: left;
-                        color: #2565AF;
-                        margin-bottom: 0.5rem;
-                    }
-
                     .related-list {
                         display: flex;
-                        flex-direction: column;
-                        gap: 0.84rem;
+                        flex-wrap: wrap;
+                        gap: 0.25rem;
 
                         .game-item {
+                            width: calc(25% - 0.25rem);
+                            aspect-ratio: 1/1;
                             display: flex;
                             align-items: center;
                             justify-content: space-between;
 
                             .img {
-                                height: 4.06rem;
                                 display: flex;
                                 align-items: center;
-                                width: 70%;
-
+                                width: 100%;
+                                height: 100%;
                                 image {
-                                    height: 100%;
-                                    border-radius: 0.5rem;
-                                }
-
-                                .info {
-                                    margin-left: 1.375rem;
-                                    width: 60%;
-                                    height: 100%;
-                                    padding-top: 0.5rem;
-                                    border-bottom: 1px solid #212227;
-
-                                    .name {
-                                        font-family: Inter;
-                                        font-size: 0.8125rem;
-                                        font-weight: 700;
-                                        text-align: left;
-                                        color: #212227;
-                                        text-overflow: ellipsis;
-                                        overflow: hidden;
-                                        white-space: nowrap;
-                                    }
-
-                                    .num {
-                                        font-family: Inter;
-                                        font-size: 0.8125rem;
-                                        font-weight: 400;
-                                        text-align: left;
-                                        color: #212227;
-                                        margin-top: 0.8125rem;
-                                        text-overflow: ellipsis;
-                                        overflow: hidden;
-                                        white-space: nowrap;
-                                        width: 100%;
-                                    }
+                                    width: 100%;
+                                    height: 100%;                                    border-radius: 0.5rem;
                                 }
                             }
 
-                            .right {
-                                width: 20%;
 
-                                .play-btn {
-                                    border: 2px solid #212227;
-                                    border-radius: 3.125rem;
-                                    font-family: Inter;
-                                    font-size: 0.9375rem;
-                                    font-weight: 700;
-                                    line-height: 1.125rem;
-                                    padding: 0.3125rem 0.91rem;
-                                    text-align: center;
-                                    color: #212227;
-                                }
-                            }
                         }
                     }
                 }

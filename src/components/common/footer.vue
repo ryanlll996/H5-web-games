@@ -35,7 +35,7 @@ export default {
         font-size: 0.625rem;
         font-weight: 400;
         text-align: left;
-        color: #212227;
+        color: #FE5757;
         &.last{
             margin-top: 0.625rem;
             text{

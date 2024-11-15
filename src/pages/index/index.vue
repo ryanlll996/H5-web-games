@@ -2,7 +2,7 @@
   <view class="index-wapper" :class="[currentTheme + '-theme']">
     <c-navbar 
       @openLeftMenu="openLeftMenu"></c-navbar>
-    <scroll-view class="scroll-view" scroll-y scroll-with-animation="true" @scrolltolower="loadChargeListMore"
+    <scroll-view class="scroll-view" scroll-y scroll-with-animation="true" @scrolltolower="loadMore"
       @scroll="onScroll" :scroll-into-view="scrollIntoViewId">
       <Home v-if="currentTab === 0" :gameTypes="gameTypes" :hotGames="hotGames" :newGames="newGames" ref="home"></Home>
     </scroll-view>
@@ -55,7 +55,6 @@ export default {
     this.$store.dispatch('setTab', 0);
     this.getChannelByUrl()
     this.getTas()
-    this.getCategoryGame()
   },
   onShow() {
     
@@ -68,19 +67,13 @@ export default {
     },
     async getTas(){
       const res = await this.$api.home.getTags({wid: this.channelInfo.wid})
-      console.log(res)
       this.$store.dispatch('setTags', res)
-      // res.forEach((element, index) => {
-      //   this.gameParam.limit = 4
-      //   this.gameParam.tid = element.id
-      //   this.loadGame(res, index)
-      //   this.gameParam.tid = ''
-      // });
     },
     async getHotGames() {
       this.hotParam.orderBy = 'hot_num desc'
             const res = await this.$api.home.getNewGame(this.hotParam);
-            this.hotGames = res.data
+            this.hotGames = this.hotGames.concat(res.data)
+            this.status = res.data.length < this.hotParam.limit ? 'nomore' : ''
       },
       async getNewGames() {
         this.hotParam.orderBy = 'id desc'
@@ -111,16 +104,9 @@ export default {
       const res = await this.$api.home.getWebsite({ url: currentPath })
       this.$store.dispatch('setChannelInfo', res);
       this.hotParam.wid = res.wid
-      this.getNewGames()
+      // this.getNewGames()
       this.getHotGames()
     },
-  
-    
-    async loadBanner() {
-      console.log('loadBanner')
-      this.bannerList = await this.$api.home.getAd();
-    },
-   
     async closeLogin() {
       this.isShowLogin = false
     },
@@ -134,160 +120,21 @@ export default {
       this.status = 'loading'
       this.loadGame()
     },
-    toRecharge() {
-      this.$store.dispatch('setTab', 2);
-      this.$nextTick(() => {
-        this.$refs.recharge.loadRechargeList()
-        this.$refs.recharge.loadPayList()
-      })
-    },
-    logout() {
-      this.$store.dispatch('setTab', 0);
-    },
-   
     onHotGamesClick() {
       this.isLeftMenu = false
       this.$store.dispatch('setTab', 1);
     },
-    onGamesClick(item) {
-      
-    },
     openLeftMenu() {
       this.isLeftMenu = true
-    },
-    onSwitch() {
-      const { currentTab } = this
-      switch (currentTab) {
-        case 0:
-          this.$nextTick(() => {
-            this.$refs.home.getJackPot()
-          })
-          break
-        case 1:
-          this.dataList = []
-          this.$nextTick(() => {
-            this.$refs.group.getWages()
-            this.$refs.group.loadGroupTotal()
-            this.loadingChargeList()
-          })
-
-          break
-        case 2:
-          this.$nextTick(() => {
-            this.$refs.recharge.loadRechargeList()
-            this.$refs.recharge.loadPayList()
-          })
-
-          break
-      }
-    },
-    async loadingChargeList() {
-      const res = await this.$api.user.getChargeList(this.chargeObj);
-      this.dataList = this.dataList.concat(res.data);
-      this.status = res.data.length < this.chargeObj.limit ? 'nomore' : '';
     },
     loadMore() {
       const { currentTab } = this
       if (currentTab === 0) {
-        this.gameParam.page++
-        console.log('loadMore', this.gameParam.page)
+        this.hotParam.page++
         if (this.status !== 'nomore') {
-          this.loadGame()
+          this.getHotGames()
         }
       }
-    },
-    loadPGMore() {
-      const { currentTab } = this
-      if (currentTab === 0) {
-        this.gamePGParam.page++
-        if (this.listObj.pgStatus !== 'nomore') {
-          this.loadPGGame()
-        }
-      }
-    },
-    loadJILIMore() {
-      const { currentTab } = this
-      if (currentTab === 0) {
-        this.gameJILIParam.page++
-        if (this.listObj.jiliStatus !== 'nomore') {
-          this.loadJiliGame()
-        }
-      }
-    },
-    loadPPMore() {
-      const { currentTab } = this
-      if (currentTab === 0) {
-        this.gamePPParam.page++
-        if (this.listObj.ppStatus !== 'nomore') {
-          this.loadPPGame()
-        }
-      }
-    },
-    loadChargeListMore() {
-      if (this.currentTab === 1) {
-        this.chargeObj.page++
-        console.log('loadMore', this.chargeObj.page)
-        if (this.status !== 'nomore') {
-          this.loadingChargeList()
-        }
-      }
-    },
-    receive() {
-      this.dataList = []
-      this.loadingChargeList()
-    },
-    tabSwitch(index) {
-      this.dataList = []
-      this.chargeObj.page = 1
-      this.chargeObj.type = index
-      this.loadingChargeList()
-    },
-    onFilterConfirm(e) {
-      this.chargeObj.page = 1
-      this.dataList = []
-      this.chargeObj.date = e.value[0].id
-      this.loadingChargeList()
-    },
-    onScroll(e) {
-      console.log(e.detail.scrollHeight)
-    },
-    toRank() {
-      if (!this.isLogin) {
-        return
-      }
-      uni.navigateTo({
-        url: '/pages/rank/index'
-      })
-    },
-    refresh() {
-    },
-    toUrl(item) {
-      window.open(this.ensureHttpOrHttps(item.url), '_blank');
-    },
-    ensureHttpOrHttps(str) {
-      const pattern = /^(https?:\/\/)/i;
-      if (!pattern.test(str)) {
-        str = 'https://' + str;
-      }
-
-      return str;
-    },
-    scrollTo(item) {
-      console.log(item)
-      if (item.id === 0) {
-        this.scrollIntoViewId = 'home__list';
-      } else if (item.id === 1) {
-        this.scrollIntoViewId = 'PG';
-      } else if (item.id === 9) {
-        this.scrollIntoViewId = 'PP';
-      } else if (item.id === 8) {
-        this.scrollIntoViewId = 'JILI';
-      }
-
-      // 延迟一定时间后清除scrollIntoViewId，以便在滚动完成后恢复默认状态
-      setTimeout(() => {
-        this.scrollIntoViewId = '';
-      }, 500); // 假设滚动时间为500ms
     }
   },
 }
@@ -301,7 +148,7 @@ export default {
   height: 100%;
   position: absolute;
   width: 100%;
-  background-color: #FFFFFF;
+  background-color: #EFECEC;
   // background-size: 100% 100%;
   .rank-import {
     position: absolute;
