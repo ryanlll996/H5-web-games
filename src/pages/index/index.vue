@@ -40,8 +40,7 @@ export default {
         keyword: '',
         orderBy: '',
         tid: ''
-      },
-      tags: [],
+      }
     }
   },
   components: {
@@ -50,7 +49,7 @@ export default {
     Footer
   },
   computed: {
-    ...mapGetters(['isLogin', 'currentTab', 'currentTheme', 'channelInfo'])
+    ...mapGetters(['isLogin', 'currentTab', 'currentTheme', 'channelInfo', 'tags'])
   },
   onLoad() {
     this.$store.dispatch('setTab', 0);
@@ -70,7 +69,7 @@ export default {
     async getTas(){
       const res = await this.$api.home.getTags({wid: this.channelInfo.wid})
       console.log(res)
-      this.tags = res
+      this.$store.dispatch('setTags', res)
       // res.forEach((element, index) => {
       //   this.gameParam.limit = 4
       //   this.gameParam.tid = element.id
@@ -302,7 +301,7 @@ export default {
   height: 100%;
   position: absolute;
   width: 100%;
-  background-color: #EBF4FF;
+  background-color: #FFFFFF;
   // background-size: 100% 100%;
   .rank-import {
     position: absolute;

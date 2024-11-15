@@ -9,7 +9,8 @@ const Store = {
     currentTheme: 'theme1',
     currentTab: 0,
     rechargeFlag: 1,
-    scoreInfo: {}
+    scoreInfo: {},
+    tags: []
   },
   getters: {
     isLogin: state => {
@@ -41,6 +42,9 @@ const Store = {
     },
     scoreInfo: state => {
       return state.scoreInfo
+    },
+    tags: state => {
+      return state.tags
     }
   },
   mutations: {
@@ -76,6 +80,9 @@ const Store = {
     },
     SET_SCOREINFO: (state, value) => {
       state.scoreInfo = value
+    },
+    SET_TAGS: (state, value) => {
+      state.tags = value
     }
   },
   actions: {
@@ -89,7 +96,8 @@ const Store = {
     setTheme: ({commit}, obj) => commit('SET_Theme', obj),
     setTab: ({commit}, obj) => commit('SET_TAB', obj),
     setRechargeFlag: ({commit}, obj) => commit('SET_RECHARGEFLAG', obj),
-    setScoreInfo: ({commit}, obj) => commit('SET_SCOREINFO', obj)
+    setScoreInfo: ({commit}, obj) => commit('SET_SCOREINFO', obj),
+    setTags: ({commit}, obj) => commit('SET_TAGS', obj)
   }
 };
 

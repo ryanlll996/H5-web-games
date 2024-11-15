@@ -1,11 +1,6 @@
 <template>
-    <up-popup :show="isLeftMenu" mode="left" :safeAreaInsetTop="true" :closeOnClickOverlay="true">
+    <up-popup :show="isLeftMenu" mode="top" :safeAreaInsetTop="true" :closeOnClickOverlay="true">
         <view class="menus">
-            
-            <view class="menus-title">
-                Menu
-                <view class="line"></view>
-            </view>
             <view class="game-types">
                 <view class="game-types-item" @click="onHotGamesClick">
                     Hot Games
@@ -71,37 +66,23 @@ export default {
 }
 
 ::v-deep .u-transition {
-    bottom: 0;
-
+    height: calc(100% - 4.25rem);
+    margin-top: 4.25rem;
 }
 
 ::v-deep .u-popup__content {
-    // height: calc(100% - 2.75rem);
-
+    // height: calc(100% - 4.25rem);
+    // bottom: 0;
+    width: 100%;
+    position: absolute;
 }
 
 .menus {
     box-sizing: border-box;
     width: 100%;
-    height: 100%;
+    // height: 100%;
     background-color: #FFFFFF;
-    padding: 0 0.72rem;
-
-    .menus-title {
-        padding: 0.72rem 0;
-        font-family: Inter;
-        font-size: 0.9375rem;
-        font-weight: 700;
-        text-align: left;
-        color: #2565AF;
-
-        .line {
-            width: 100%;
-            height: 1px;
-            background-color: #2565AF;
-            margin-top: 0.41rem;
-        }
-    }
+    padding: 0.72rem;
 
     .menus-item {
         margin-top: 0.8125rem;
@@ -114,21 +95,19 @@ export default {
 
     .game-types {
         margin-top: 0.8125rem;
-        width: 10.125rem;
-
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;        
         .game-types-item {
             font-family: Inter;
             font-size: 0.9375rem;
             font-weight: 700;
-            text-align: center;
-            color: #2565AF;
+            color: #212227;
             margin-top: 0.8125rem;
-            padding: 0.53rem 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: #DCECFF;
+            padding: 0.5625rem 0.75rem;
+            background-color: #EBEBEB;
             border-radius: 0.25rem;
+            border: 1px solid #212227;
         }
     }
 }
